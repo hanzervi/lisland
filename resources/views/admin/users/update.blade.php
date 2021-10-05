@@ -1,44 +1,48 @@
-<div class="modal fade" id="addModal">
+<div class="modal fade" id="updateModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Account</h4>
+                <h4 class="modal-title">Update User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="javascript:void(0)" method="POST" id="addForm">
+            <form action="javascript:void(0)" method="POST" id="updateForm">
+                <input type="text" name="update_id" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="name" required>
+                                <input type="text" class="form-control" name="update_name" required>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Username <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="username" required>
+                                <input type="text" class="form-control" name="update_username" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="password" required>
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="update_password">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Confirm Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="confirmPw" required>
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control" name="update_confirmPw">
                             </div>
+                        </div>
+                        <div class="col-lg-12 mt-5">
+                            <i>Note: Fill up password field if you wish to change it.</i>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-custom btn-default" data-dismiss="modal">Close</button>
-                    <button role="submit" class="btn btn-custom btn-success">Add</button>
+                    <button type="button" class="btn btn-custom btn-default" data-dismiss="modal" onclick="$('#updateForm').trigger('reset');">Close</button>
+                    <button role="submit" class="btn btn-custom btn-primary">Update</button>
                 </div>
             </form>
         </div>

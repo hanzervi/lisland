@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('public/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset('public/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
@@ -22,6 +23,12 @@
     <style>
         .btn-custom {
             min-width: 100px !important;
+        }
+
+        #food-drink-preview, #food-drink-preview-update {
+            height: 260px;
+            width: 360px;
+            object-fit: cover;
         }
     </style>
 
@@ -37,30 +44,21 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" id="userBtn">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <b>{{ Auth::user()->name }}</b>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
+                    <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item" onclick="profile({{ Auth::id() }})">
+                            <i class="fas fa-user-secret mr-2"></i> Credential
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item" >
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -69,7 +67,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <a href="{{ url('/admin') }}" class="brand-link">
-                <img src="{{ asset('public/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('public/assets/img/lisland-icon.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Lisland</span>
             </a>
@@ -129,26 +127,14 @@
                                 <p>Food & Drink</p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::is('admin/user/*') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>User <i class="right fas fa-angle-left"></i></p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('/admin/user/profile') }}" class="nav-link {{ Request::is('admin/user/profile') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Profile</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/admin/user/accounts') }}" class="nav-link {{ Request::is('admin/user/accounts') || Request::is('admin/user/accounts/*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Accounts</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (Auth::id() == 1)
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/users') }}" class="nav-link {{ Request::is('admin/users') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>Users</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>
@@ -165,6 +151,9 @@
                 <b>Version</b> 1.0.0
             </div>
         </footer>
+
+        @include('admin.users.profile')
+
     </div>
 
     <script src="{{ asset('public/plugins/jquery/jquery.min.js') }}"></script>
@@ -172,6 +161,7 @@
 
     <script src="{{ asset('public/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('public/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('public/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('public/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
@@ -193,6 +183,113 @@
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.select2').select2();
+            $('.select2').width('100%');
+        });
+
+        function profile(id) {
+            $('#profileModal').modal({
+                backdrop:'static'
+            });
+
+            $('[name=profile_password]').val('');
+            $('[name=profile_confirmPw]').val('');
+
+            $.ajax({
+                url: "{{ url('/admin/users/get') }}/"+id,
+                type: "GET",
+                success: function(items) {
+                    $.each(items, function (i, item) {
+                        $('[name=profile_id]').val(item.id);
+                        $('[name=profile_name]').val(item.name);
+                        $('[name=profile_username]').val(item.username);
+                    });
+                }
+            });
+        }
+
+        $('#profileForm').on('submit', function () {
+            let pw = $('[name=profile_password]').val();
+            let conPw = $('[name=profile_confirmPw]').val();
+
+            let uf = $('#profileForm');
+            let fd = new FormData(uf[0]);
+
+            $.confirm({
+                animation: 'none',
+                theme: 'dark',
+                title: 'Update',
+                content: 'User profile will be updated, continue?',
+                buttons: {
+                    No: function () {
+                        //
+                    },
+                    Yes: {
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            if (pw != conPw) {
+                                $.alert({
+                                    animation: 'none',
+                                    theme: 'dark',
+                                    title: 'Oops!',
+                                    content: 'Your password is not matched.'
+                                });
+                            } 
+                            else {
+                                $.ajax({
+                                    url: '{{ url("/admin/users/profile") }}',
+                                    method: 'post',
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (result) {
+                                        if (result == 'success') {
+                                            $.alert({
+                                                animation: 'none',
+                                                theme: 'dark',
+                                                title: 'Success!',
+                                                content: 'User profile has been updated.',
+                                                buttons: {
+                                                    OK: function () {
+                                                        $('#profileModal').modal('hide');
+                                                        $('#userBtn').load(document.URL +  ' #userBtn');
+                                                    },
+                                                }
+                                            });
+                                        } 
+                                        else if (result == 'password_error') {
+                                            $.alert({
+                                                animation: 'none',
+                                                theme: 'dark',
+                                                title: 'Oops!',
+                                                content: 'Your password is not matched.'
+                                            });
+                                        } 
+                                        else if (result == 'username_error') {
+                                            $.alert({
+                                                animation: 'none',
+                                                theme: 'dark',
+                                                title: 'Oops!',
+                                                content: 'Username has already been taken.'
+                                            });
+                                        } 
+                                        else {
+                                            $.alert({
+                                                animation: 'none',
+                                                theme: 'dark',
+                                                title: 'Failed!',
+                                                content: 'User profile has failed to update.'
+                                            });
+                                            console.log(result);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    },
                 }
             });
         });

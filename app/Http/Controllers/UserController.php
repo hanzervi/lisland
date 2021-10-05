@@ -11,7 +11,7 @@ use Auth;
 
 use App\User;
 
-class UserAccounts extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
@@ -19,7 +19,10 @@ class UserAccounts extends Controller
     }
 
     public function index() {
-        return view('admin.user-accounts.index');
+        if (Auth::id() == 1) {
+            return view('admin.users.index');
+        }
+        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     public function table(Request $request) {
@@ -31,8 +34,11 @@ class UserAccounts extends Controller
         return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
-    public function get($id) {
-        return User::whereId($id)->get();
+    public function get(Request $request, $id) {
+        if ($request->ajax()) {
+            return User::whereId($id)->get();
+        }
+        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     function add(Request $request) {
@@ -136,12 +142,95 @@ class UserAccounts extends Controller
         }
         });
         try {
-                DB::commit();
-                return response($result);
+            DB::commit();
+            return response($result);
         }
         catch(\Exception $e) {
             DB::rollback();
             return response($e->getMessage());
         }
+    }
+
+    function profile(Request $request) {
+        $result = null;
+        DB::transaction(function() use($request, &$result) {
+        $user = User::find($request->profile_id);
+
+        if ($user->username != $request->profile_username) {
+                $validator = Validator::make($request->all(), [
+                    'profile_username' => ['required', 'unique:users,username']
+                ]);
+                if ($validator->passes()) {
+
+                    if ($request->profile_password != '') {
+                        User::where('id', '=', $request->profile_id)
+                            ->update([
+                                        'name' => $request->profile_name, 
+                                        'username' => $request->profile_username, 
+                                        'password' => Hash::make($request->profile_password)
+                                    ]);
+                    }
+                    else {
+                        User::where('id', '=', $request->profile_id)
+                            ->update([
+                                        'name' => $request->profile_name, 
+                                        'username' => $request->profile_username
+                                    ]);
+                    }
+
+                    $result = 'success';
+                }
+                else
+                    $result = 'username_error';
+        }
+        else {
+            if ($request->profile_password != '') {
+                User::where('id', '=', $request->profile_id)
+                    ->update([
+                                'name' => $request->profile_name, 
+                                'password' => Hash::make($request->profile_password)
+                            ]);
+            }
+            else {
+                User::where('id', '=', $request->profile_id)
+                    ->update([
+                                'name' => $request->profile_name, 
+                            ]);
+            }
+
+            $result = 'success';
+        }
+        });
+        try {
+            DB::commit();
+            return response($result);
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            return response($e->getMessage());
+        }
+    }
+
+    public function bin() {
+        return view('admin.users.bin');
+    }
+
+    public function binTable(Request $request) {
+        if ($request->ajax()) {
+            return User::where('status', '=', '-1')
+                    ->where('id', '!=', '1')
+                    ->get();
+        }
+        return response()->json(['error' => 'Unauthorized.'], 401);
+    }
+
+    function restore($id) {
+        $status = User::whereId($id)
+            ->update(['status' => '1']);
+
+        if ($status)
+            return 'success';
+        
+        return 'error';
     }
 }

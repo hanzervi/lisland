@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">User Accounts</h1>
+                <h1 class="m-0">Users</h1>
             </div>
         </div>
     </div>
@@ -13,8 +13,14 @@
 
 <div class="content">
     <div class="container-fluid">
-        <a href="#" data-toggle="modal" data-target="#addModal"><button
-                class="btn btn-custom btn-success">Add</button></a>
+        <a href="#" data-toggle="modal" data-target="#addModal">
+            <button class="btn btn-custom btn-success">Add</button>
+        </a>
+        @if (Auth::id() == 1)
+            <a href="{{ url('admin/users/bin') }}" class="float-right">
+                <button class="btn btn-outline-secondary"><i class="fa fa-trash"></i></button>
+            </a>
+        @endif
         <div class="card mt-3">
             <div class="card-body">
                 <table id="tb" class="table table-bordered table-striped" width="100%">
@@ -31,8 +37,8 @@
     </div>
 </div>
 
-@include('admin.user-accounts.add')
-@include('admin.user-accounts.update')
+@include('admin.users.add')
+@include('admin.users.update')
 
 @endsection
 
@@ -46,7 +52,7 @@
         $("#tb").DataTable({
             bDestroy: true,
             ajax: {
-                url: "{{ url('/admin/user/accounts/table') }}",
+                url: "{{ url('/admin/users/table') }}",
                 dataSrc: ""
             },
             columns: [{
@@ -97,7 +103,7 @@
                         } 
                         else {
                             $.ajax({
-                                url: '{{ url("/admin/user/accounts/add") }}',
+                                url: '{{ url("/admin/users/add") }}',
                                 method: 'post',
                                 data: fd,
                                 processData: false,
@@ -157,7 +163,7 @@
             animation: 'none',
             theme: 'dark',
             title: 'Remove',
-            content: 'User acocunt will be remove, continue?',
+            content: 'User acocunt will be removed, continue?',
             buttons: {
                 No: function () {
                     //
@@ -167,7 +173,7 @@
                     action: function(){
 
                         $.ajax({
-                            url: "{{ url('/admin/user/accounts/remove') }}/"+id,
+                            url: "{{ url('/admin/users/remove') }}/"+id,
                             method: 'post',
                             processData:false,
                             contentType: false,
@@ -207,7 +213,7 @@
         $('[name=update_confirmPw]').val('');
 
         $.ajax({
-            url: "{{ url('/admin/user/accounts/get') }}/"+id,
+            url: "{{ url('/admin/users/get') }}/"+id,
             type: "GET",
             success: function(items) {
                 $.each(items, function (i, item) {
@@ -248,7 +254,7 @@
                         } 
                         else {
                             $.ajax({
-                                url: '{{ url("/admin/user/accounts/update") }}',
+                                url: '{{ url("/admin/users/update") }}',
                                 method: 'post',
                                 data: fd,
                                 processData: false,
