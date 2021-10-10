@@ -25,7 +25,7 @@
             min-width: 100px !important;
         }
 
-        #food-drink-preview, #food-drink-preview-update {
+        #food-drink-preview, #food-drink-preview-update, #id-card-preview {
             height: 260px;
             width: 360px;
             object-fit: cover;
@@ -116,20 +116,20 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/admin/pool') }}" class="nav-link {{ Request::is('admin/pool') ? 'active' : '' }}">
+                            <a href="{{ url('/admin/pool-and-huts') }}" class="nav-link {{ Request::is('admin/pool-and-huts') || Request::is('admin/pool-and-huts/*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-swimming-pool"></i>
-                                <p>Pool</p>
+                                <p>Pool & Huts</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/admin/food-and-drink') }}" class="nav-link {{ Request::is('admin/food-and-drink') ? 'active' : '' }}">
+                            <a href="{{ url('/admin/food-and-drink') }}" class="nav-link {{ Request::is('admin/food-and-drink') || Request::is('admin/food-and-drink/*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-utensils"></i>
                                 <p>Food & Drink</p>
                             </a>
                         </li>
                         @if (Auth::id() == 1)
                             <li class="nav-item">
-                                <a href="{{ url('/admin/users') }}" class="nav-link {{ Request::is('admin/users') ? 'active' : '' }}">
+                                <a href="{{ url('/admin/users') }}" class="nav-link {{ Request::is('admin/users') || Request::is('admin/users/*') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>Users</p>
                                 </a>

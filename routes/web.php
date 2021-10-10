@@ -21,6 +21,9 @@ Route::get('/admin', function() {
     return redirect('login');
 });
 
+Route::get('/admin/customer/', 'CustomerController@index');
+Route::get('/admin/customer/table', 'CustomerController@table');
+
 Route::get('/admin/food-and-drink/', 'FoodDrinkController@index');
 Route::get('/admin/food-and-drink/table', 'FoodDrinkController@table');
 Route::get('/admin/food-and-drink/get/{id}', 'FoodDrinkController@get');
