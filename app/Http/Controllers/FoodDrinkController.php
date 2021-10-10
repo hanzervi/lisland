@@ -21,7 +21,8 @@ class FoodDrinkController extends Controller
             'Filipino Breakfast',
             'Power Breakfast',
             'Lislands\' Special',
-            'International Specialties'
+            'International Specialties',
+            'Drinks'
         ];
         
         return view('admin.food-drink.index', ['category' => $category]);

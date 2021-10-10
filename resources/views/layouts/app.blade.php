@@ -30,6 +30,18 @@
             width: 360px;
             object-fit: cover;
         }
+
+        .pool-images {
+            height: 150px;
+            width: 150px;
+            object-fit: cover;
+        }
+
+        .pool-image360 {
+            height: auto;
+            width: 100%;
+            object-fit: cover;
+        }
     </style>
 
 </head>
@@ -103,12 +115,12 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ url('/admin/customer') }}" class="nav-link {{ Request::is('admin/customer') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Customer</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ url('/admin/room') }}" class="nav-link {{ Request::is('admin/room') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-home"></i>
@@ -116,9 +128,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/admin/pool-and-huts') }}" class="nav-link {{ Request::is('admin/pool-and-huts') || Request::is('admin/pool-and-huts/*') ? 'active' : '' }}">
+                            <a href="{{ url('/admin/pool') }}" class="nav-link {{ Request::is('admin/pool') || Request::is('admin/pool/*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-swimming-pool"></i>
-                                <p>Pool & Huts</p>
+                                <p>Pool</p>
                             </a>
                         </li>
                         <li class="nav-item">

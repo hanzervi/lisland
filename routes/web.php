@@ -24,6 +24,17 @@ Route::get('/admin', function() {
 Route::get('/admin/customer/', 'CustomerController@index');
 Route::get('/admin/customer/table', 'CustomerController@table');
 
+Route::get('/admin/pool/', 'PoolController@index');
+Route::get('/admin/pool/table', 'PoolController@table');
+Route::get('/admin/pool/get/{id}', 'PoolController@get');
+Route::get('/admin/pool/bin', 'PoolController@bin');
+Route::get('/admin/pool/bin/table', 'PoolController@binTable');
+Route::post('/admin/pool/bin/restore/{id}', 'PoolController@restore');
+Route::post('/admin/pool/bin/removeP/{id}', 'PoolController@removeP');
+Route::post('/admin/pool/add', 'PoolController@add');
+Route::post('/admin/pool/update', 'PoolController@update');
+Route::post('/admin/pool/remove/{id}', 'PoolController@remove');
+
 Route::get('/admin/food-and-drink/', 'FoodDrinkController@index');
 Route::get('/admin/food-and-drink/table', 'FoodDrinkController@table');
 Route::get('/admin/food-and-drink/get/{id}', 'FoodDrinkController@get');
