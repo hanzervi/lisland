@@ -169,4 +169,10 @@ class PoolController extends Controller
         
         return 'error';
     }
+
+    function image360($id) {
+        $image360 = Pool::whereId($id)->first();
+
+        return view('admin.pool.image360', ['data' => $image360->image360]);
+    }
 }

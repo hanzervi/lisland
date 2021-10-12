@@ -29,6 +29,7 @@ Route::get('/admin/pool/table', 'PoolController@table');
 Route::get('/admin/pool/get/{id}', 'PoolController@get');
 Route::get('/admin/pool/bin', 'PoolController@bin');
 Route::get('/admin/pool/bin/table', 'PoolController@binTable');
+Route::get('/admin/pool/image360/{id}', 'PoolController@image360');
 Route::post('/admin/pool/bin/restore/{id}', 'PoolController@restore');
 Route::post('/admin/pool/bin/removeP/{id}', 'PoolController@removeP');
 Route::post('/admin/pool/add', 'PoolController@add');

@@ -37,6 +37,7 @@
     </div>
 </div>
 
+@include('admin.pool.view')
 @include('admin.pool.add')
 @include('admin.pool.update')
 
@@ -340,6 +341,46 @@
             }
         });
     });
+
+    function view(id) {
+        $('#view_ph-images').empty();
+        $('#view_ph-image360').empty();
+
+        $('#viewModal').modal({
+            backdrop:'static'
+        });
+
+        $.ajax({
+            url: "{{ url('/admin/pool/get') }}/"+id,
+            type: "GET",
+            success: function(items) {
+                $.each(items, function (i, item) {
+                    $('[name=view_name]').html(item.name);
+                    $('[name=view_description]').html(item.description);
+
+                    $.each(JSON.parse(item.images), function(x, image) {
+                        $('#view_ph-images').append(
+                            '<div class="col-lg-4">'+
+                                '<div class="form-group">'+
+                                    '<img class="img-fluid pool-images" src="{{ asset('public/storage/pool') }}/'+image+'">'+
+                                '</div>'+
+                            '</div>'
+                        );
+                    });
+
+                    $('#view_ph-image360').append(
+                        '<div class="col-lg-12">'+
+                            '<div class="form-group">'+
+                                '<a href="{{ url('public/admin/pool/image360') }}/'+id+'" target="_blank">'+
+                                    '<img class="img-fluid pool-image360" src="{{ asset('public/storage/pool') }}/'+item.image360+'">'+
+                                '</a>'+
+                            '</div>'+
+                        '</div>'
+                    )
+                });
+            }
+        });
+    }
 
 </script>
 @endsection

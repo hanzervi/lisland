@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label>Images</label>
                                 <br>
-                                <input type="file" name="update_images[]" id="update_images" multiple>
+                                <input type="file" name="update_images[]" id="update_images" accept="image/png, image/jpeg" multiple>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label>360 Image </label>
                                 <br>
-                                <input type="file" name="update_image360">
+                                <input type="file" name="update_image360" accept="image/png, image/jpeg">
                             </div>
                         </div>
                         <div class="col-lg-12">

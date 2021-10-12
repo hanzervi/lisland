@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('public/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/plugins/jquery-confirm/jquery-confirm.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/dist/css/adminlte.min.css') }}">
+    <script src="{{ asset('public/plugins/aframe/aframe.min.js') }}"></script>
 
 
     <style>
