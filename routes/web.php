@@ -21,8 +21,17 @@ Route::get('/admin', function() {
     return redirect('login');
 });
 
-Route::get('/admin/customer/', 'CustomerController@index');
-Route::get('/admin/customer/table', 'CustomerController@table');
+Route::get('/admin/room/', 'RoomController@index');
+Route::get('/admin/room/table', 'RoomController@table');
+Route::get('/admin/room/get/{id}', 'RoomController@get');
+Route::get('/admin/room/bin', 'RoomController@bin');
+Route::get('/admin/room/bin/table', 'RoomController@binTable');
+Route::get('/admin/room/image360/{id}', 'RoomController@image360');
+Route::post('/admin/room/bin/restore/{id}', 'RoomController@restore');
+Route::post('/admin/room/bin/removeP/{id}', 'RoomController@removeP');
+Route::post('/admin/room/add', 'RoomController@add');
+Route::post('/admin/room/update', 'RoomController@update');
+Route::post('/admin/room/remove/{id}', 'RoomController@remove');
 
 Route::get('/admin/pool/', 'PoolController@index');
 Route::get('/admin/pool/table', 'PoolController@table');

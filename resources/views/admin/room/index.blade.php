@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Customer</h1>
+                <h1 class="m-0">Room</h1>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
             <button class="btn btn-custom btn-success">Add</button>
         </a>
         @if (Auth::id() == 1)
-            <a href="{{ url('admin/customer/bin') }}" class="float-right">
+            <a href="{{ url('admin/room/bin') }}" class="float-right">
                 <button class="btn btn-outline-secondary"><i class="fa fa-trash"></i></button>
             </a>
         @endif
@@ -27,9 +27,9 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Birthdate</th>
-                            <th>Sex</th>
-                            <th>Address</th>
+                            <th>Description</th>
+                            <th>Weekdays</th>
+                            <th>Weekend</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -39,13 +39,15 @@
     </div>
 </div>
 
-@include('admin.customer.add')
-{{-- @include('admin.customer.update') --}}
+@include('admin.room.view')
+@include('admin.room.add')
+@include('admin.room.update')
 
 @endsection
 
 @section('js')
 <script>
+
     $(document).ready(function () {
         callDt();
     });
@@ -54,7 +56,7 @@
         $("#tb").DataTable({
             bDestroy: true,
             ajax: {
-                url: "{{ url('/admin/customer/table') }}",
+                url: "{{ url('/admin/room/table') }}",
                 dataSrc: ""
             },
             columns: [
@@ -62,18 +64,25 @@
                     data: 'name'
                 },
                 {
-                    data: 'birthdate'
+                    data: 'description'
                 },
                 {
-                    data: 'sex'
+                    data: 'price_wd',
+                    render: function (data, type, row) {
+                        return data.toLocaleString();
+                    }
                 },
                 {
-                    data: 'address'
+                    data: 'price_we',
+                    render: function (data, type, row) {
+                        return data.toLocaleString();
+                    }
                 },
                 {
                     data: 'id',
                     render: function (data, type, row) {
                         return '<div class="btn-group float-right">' +
+                                    '<a href="javascript:void(0)" type="button" class="btn btn-info" onclick="view('+data+')"><i class="fas fa-eye"></i></a>' +
                                     '<a href="javascript:void(0)" type="button" class="btn btn-primary" onclick="update('+data+')"><i class="fas fa-edit"></i></a>' +
                                     '<a href="javascript:void(0)" type="button" class="btn btn-danger" onclick="remove('+data+')"><i class="fas fa-trash"></i></a>' +
                                 '</div>';
@@ -83,10 +92,75 @@
         });
     }
 
-    $('#addForm').on('submit', function () {
-        let pw = $('[name=password]').val();
-        let conPw = $('[name=confirmPw]').val();
+    $('#images').on('change', function() {
+        $('#ph-images').empty();
+        for (i = 0; i < this.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#ph-images').append(
+                    '<div class="col-lg-4">'+
+                        '<div class="form-group">'+
+                            '<img class="img-fluid pool-images" src="'+e.target.result+'">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
+    });
 
+    $('[name=image360]').on('change', function() {
+        $('#ph-image360').empty();
+        for (i = 0; i < this.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#ph-image360').append(
+                    '<div class="col-lg-12">'+
+                        '<div class="form-group">'+
+                            '<img class="img-fluid pool-image360" src="'+e.target.result+'">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
+    });
+
+    $('#update_images').on('change', function() {
+        $('#update_ph-images').empty();
+        for (i = 0; i < this.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#update_ph-images').append(
+                    '<div class="col-lg-4">'+
+                        '<div class="form-group">'+
+                            '<img class="img-fluid pool-images" src="'+e.target.result+'">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
+    });
+
+    $('[name=update_image360]').on('change', function() {
+        $('#update_ph-image360').empty();
+        for (i = 0; i < this.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#update_ph-image360').append(
+                    '<div class="col-lg-12">'+
+                        '<div class="form-group">'+
+                            '<img class="img-fluid pool-image360" src="'+e.target.result+'">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
+    });
+
+    $('#addForm').on('submit', function () {
         let uf = $('#addForm');
         let fd = new FormData(uf[0]);
 
@@ -94,7 +168,7 @@
             animation: 'none',
             theme: 'dark',
             title: 'Add',
-            content: 'User account will be added, continue?',
+            content: 'Item will be added, continue?',
             buttons: {
                 No: function () {
                     //
@@ -102,65 +176,41 @@
                 Yes: {
                     btnClass: 'btn-success',
                     action: function () {
-                        if (pw != conPw) {
-                            $.alert({
-                                animation: 'none',
-                                theme: 'dark',
-                                title: 'Oops!',
-                                content: 'Your password is not matched.'
-                            });
-                        } 
-                        else {
-                            $.ajax({
-                                url: '{{ url("/admin/users/add") }}',
-                                method: 'post',
-                                data: fd,
-                                processData: false,
-                                contentType: false,
-                                success: function (result) {
-                                    if (result == 'success') {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Success!',
-                                            content: 'User account has been added.',
-                                            buttons: {
-                                                OK: function () {
-                                                    callDt();
-                                                    $('#addModal').modal('hide');
-                                                    $('#addForm').trigger('reset');
-                                                },
-                                            }
-                                        });
-                                    } 
-                                    else if (result == 'password_error') {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Oops!',
-                                            content: 'Your password is not matched.'
-                                        });
-                                    } 
-                                    else if (result == 'username_error') {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Oops!',
-                                            content: 'Username has already been taken.'
-                                        });
-                                    } 
-                                    else {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Failed!',
-                                            content: 'User account has failed to add.'
-                                        });
-                                        console.log(result);
-                                    }
+                        $.ajax({
+                            url: '{{ url("/admin/room/add") }}',
+                            method: 'post',
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (result) {
+                                if (result == 'success') {
+                                    $.alert({
+                                        animation: 'none',
+                                        theme: 'dark',
+                                        title: 'Success!',
+                                        content: 'Item has been added.',
+                                        buttons: {
+                                            OK: function () {
+                                                callDt();
+                                                $('#addModal').modal('hide');
+                                                $('#addForm').trigger('reset');
+                                                $('#ph-images').empty(); 
+                                                $('#ph-image360').empty();
+                                            },
+                                        }
+                                    });
+                                } 
+                                else {
+                                    $.alert({
+                                        animation: 'none',
+                                        theme: 'dark',
+                                        title: 'Failed!',
+                                        content: 'Item has failed to add.'
+                                    });
+                                    console.log(result);
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 },
             }
@@ -172,7 +222,7 @@
             animation: 'none',
             theme: 'dark',
             title: 'Remove',
-            content: 'User acocunt will be removed, continue?',
+            content: 'Item will be removed, continue?',
             buttons: {
                 No: function () {
                     //
@@ -182,7 +232,7 @@
                     action: function(){
 
                         $.ajax({
-                            url: "{{ url('/admin/users/remove') }}/"+id,
+                            url: "{{ url('/admin/room/remove') }}/"+id,
                             method: 'post',
                             processData:false,
                             contentType: false,
@@ -192,7 +242,7 @@
                                         animation: 'none',
                                         theme: 'dark',
                                         title: 'Success!',
-                                        content: 'User account has been removed.',
+                                        content: 'Item has been removed.',
                                     });
                                     callDt();
                                 }
@@ -201,7 +251,7 @@
                                         animation: 'none',
                                         theme: 'dark',
                                         title: 'Failed!',
-                                        content: 'User account has failed to remove.',
+                                        content: 'Item has failed to remove.',
                                     });
                                     console.log(result);
                                 }
@@ -214,30 +264,51 @@
     }
 
     function update(id) {
+        $('#update_ph-images').empty();
+        $('#update_ph-image360').empty();
+
         $('#updateModal').modal({
             backdrop:'static'
         });
 
-        $('[name=update_password]').val('');
-        $('[name=update_confirmPw]').val('');
-
         $.ajax({
-            url: "{{ url('/admin/users/get') }}/"+id,
+            url: "{{ url('/admin/room/get') }}/"+id,
             type: "GET",
             success: function(items) {
                 $.each(items, function (i, item) {
                     $('[name=update_id]').val(item.id);
                     $('[name=update_name]').val(item.name);
-                    $('[name=update_username]').val(item.username);
+                    $('[name=update_description]').val(item.description);
+                    $('[name=update_price_wd]').val(item.price_wd);
+                    $('[name=update_price_we]').val(item.price_we);
+                    $('[name=update_adults]').val(item.adults);
+                    $('[name=update_children]').val(item.children);
+                    $('[name=update_infants]').val(item.infants);
+                    $('[name=update_includes]').html(item.includes);
+
+                    $.each(JSON.parse(item.images), function(x, image) {
+                        $('#update_ph-images').append(
+                            '<div class="col-lg-4">'+
+                                '<div class="form-group">'+
+                                    '<img class="img-fluid pool-images" src="{{ asset('public/storage/room') }}/'+image+'">'+
+                                '</div>'+
+                            '</div>'
+                        );
+                    });
+
+                    $('#update_ph-image360').append(
+                        '<div class="col-lg-12">'+
+                            '<div class="form-group">'+
+                                '<img class="img-fluid pool-image360" src="{{ asset('public/storage/room') }}/'+item.image360+'">'+
+                            '</div>'+
+                        '</div>'
+                    )
                 });
             }
         });
     }
 
     $('#updateForm').on('submit', function () {
-        let pw = $('[name=update_password]').val();
-        let conPw = $('[name=update_confirmPw]').val();
-
         let uf = $('#updateForm');
         let fd = new FormData(uf[0]);
 
@@ -245,7 +316,7 @@
             animation: 'none',
             theme: 'dark',
             title: 'Update',
-            content: 'User account will be updated, continue?',
+            content: 'Item be updated, continue?',
             buttons: {
                 No: function () {
                     //
@@ -253,70 +324,90 @@
                 Yes: {
                     btnClass: 'btn-primary',
                     action: function () {
-                        if (pw != conPw) {
-                            $.alert({
-                                animation: 'none',
-                                theme: 'dark',
-                                title: 'Oops!',
-                                content: 'Your password is not matched.'
-                            });
-                        } 
-                        else {
-                            $.ajax({
-                                url: '{{ url("/admin/users/update") }}',
-                                method: 'post',
-                                data: fd,
-                                processData: false,
-                                contentType: false,
-                                success: function (result) {
-                                    if (result == 'success') {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Success!',
-                                            content: 'User account has been updated.',
-                                            buttons: {
-                                                OK: function () {
-                                                    callDt();
-                                                    $('#updateModal').modal('hide');
-                                                    $('#updateForm').trigger('reset');
-                                                },
-                                            }
-                                        });
-                                    } 
-                                    else if (result == 'password_error') {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Oops!',
-                                            content: 'Your password is not matched.'
-                                        });
-                                    } 
-                                    else if (result == 'username_error') {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Oops!',
-                                            content: 'Username has already been taken.'
-                                        });
-                                    } 
-                                    else {
-                                        $.alert({
-                                            animation: 'none',
-                                            theme: 'dark',
-                                            title: 'Failed!',
-                                            content: 'User account has failed to update.'
-                                        });
-                                        console.log(result);
-                                    }
+                        $.ajax({
+                            url: '{{ url("/admin/room/update") }}',
+                            method: 'post',
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (result) {
+                                if (result == 'success') {
+                                    $.alert({
+                                        animation: 'none',
+                                        theme: 'dark',
+                                        title: 'Success!',
+                                        content: 'Item has been updated.',
+                                        buttons: {
+                                            OK: function () {
+                                                callDt();
+                                                $('#updateModal').modal('hide');
+                                                $('#updateForm').trigger('reset');
+                                            },
+                                        }
+                                    });
+                                } 
+                                else {
+                                    $.alert({
+                                        animation: 'none',
+                                        theme: 'dark',
+                                        title: 'Failed!',
+                                        content: 'Item has failed to update.'
+                                    });
+                                    console.log(result);
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 },
             }
         });
     });
+
+    function view(id) {
+        $('#view_ph-images').empty();
+        $('#view_ph-image360').empty();
+
+        $('#viewModal').modal({
+            backdrop:'static'
+        });
+
+        $.ajax({
+            url: "{{ url('/admin/room/get') }}/"+id,
+            type: "GET",
+            success: function(items) {
+                $.each(items, function (i, item) {
+                    $('[name=view_name]').html(item.name);
+                    $('[name=view_description]').html(item.description);
+                    $('[name=view_price_wd]').html(item.price_wd);
+                    $('[name=view_price_we]').html(item.price_we);
+                    $('[name=view_adults]').html(item.adults);
+                    $('[name=view_children]').html(item.children);
+                    $('[name=view_infants]').html(item.infants);
+                    $('[name=view_includes]').html(item.includes);
+
+                    $.each(JSON.parse(item.images), function(x, image) {
+                        $('#view_ph-images').append(
+                            '<div class="col-lg-4">'+
+                                '<div class="form-group">'+
+                                    '<img class="img-fluid pool-images" src="{{ asset('public/storage/room') }}/'+image+'">'+
+                                '</div>'+
+                            '</div>'
+                        );
+                    });
+
+                    $('#view_ph-image360').append(
+                        '<div class="col-lg-12">'+
+                            '<div class="form-group">'+
+                                '<a href="{{ url('public/admin/room/image360') }}/'+id+'" target="_blank">'+
+                                    '<img class="img-fluid pool-image360" src="{{ asset('public/storage/room') }}/'+item.image360+'">'+
+                                '</a>'+
+                            '</div>'+
+                        '</div>'
+                    )
+                });
+            }
+        });
+    }
 
 </script>
 @endsection

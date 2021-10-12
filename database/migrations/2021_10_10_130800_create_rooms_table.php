@@ -15,6 +15,18 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('description');
+            $table->string('images');
+            $table->string('image360');
+            $table->float('price_wd');
+            $table->float('price_we');
+            $table->tinyInteger('adults')->default(0)->nullable();
+            $table->tinyInteger('children')->default(0)->nullable();
+            $table->tinyInteger('infants')->default(0)->nullable();
+            $table->text('includes');
+            $table->tinyInteger('status');
+            $table->integer('created_by')->unsigned();
             $table->timestamps();
         });
     }

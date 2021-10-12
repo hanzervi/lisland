@@ -8,5 +8,16 @@ class Room extends Model
 {
     protected $fillable = [
         'name',
+        'description',
+        'images',
+        'image360',
+        'price_wd',
+        'price_we',
+        'adults',
+        'children',
+        'infants',
+        'includes',
+        'status',
+        'created_by'
     ];
 }

@@ -153,7 +153,7 @@
             animation: 'none',
             theme: 'dark',
             title: 'Add',
-            content: 'User account will be added, continue?',
+            content: 'Item will be added, continue?',
             buttons: {
                 No: function () {
                     //

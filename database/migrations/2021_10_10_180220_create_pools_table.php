@@ -18,7 +18,7 @@ class CreatePoolsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('image360')->nullable()->default(null);
-            $table->string('images');
+            $table->text('images');
             $table->tinyInteger('status')->default(1);
             $table->integer('created_by')->unsigned();
             $table->timestamps();
