@@ -72,7 +72,7 @@
             });
 
             $(".panorama").panorama_viewer({
-                repeat: false,
+                repeat: true,
                 direction: "horizontal",
                 animationTime: 700,
                 easing: "ease-out",
