@@ -79,15 +79,7 @@
                 overlay: true
             });
 
-            $.ajax({
-                url: "{{ url('/admin/pool/get') }}/4",
-                type: "GET",
-                success: function(items) {
-                    $.each(items, function (i, item) {
-                        $('#image360').prop('src', '{{ asset('storage/pool') }}/'+item.image360+'');
-                    });
-                }
-            });
+            $('#image360').prop('src', '{{ asset('storage/pool')."/".$data }}');
         });
 
 
