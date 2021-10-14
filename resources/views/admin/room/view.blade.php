@@ -14,26 +14,37 @@
                             <label>Name</label>
                             <p name="view_name"></p>
                         </div>
+                        <hr>
                     </div>
                     <div class="col-lg-8">
                         <div class="form-group">
                             <label>Description</label>
                             <p name="view_description"></p>
                         </div>
+                        <hr>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
+                            <label>No. of Rooms</label>
+                            <p name="view_no_rooms"></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                             <label>Weekdays</label>
                             <p name="view_price_wd"></p>
                         </div>
+                        <hr>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label>Weekends</label>
                             <p name="view_price_we"></p>
                         </div>
+                        <hr>
                     </div>
                 </div>
                 <div class="row">
@@ -42,18 +53,21 @@
                             <label>Capacity Adults</label>
                             <p name="view_adults"></p>
                         </div>
+                        <hr>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label>Capacity Children</label>
                             <p name="view_children"></p>
                         </div>
+                        <hr>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label>Capacity Infants</label>
                             <p name="view_infants"></p>
                         </div>
+                        <hr>
                     </div>
                 </div>
                 <div class="row">
@@ -62,6 +76,7 @@
                             <label>Includes</label>
                             <p name="view_includes"></p>
                         </div>
+                        <hr>
                     </div>
                 </div>
                 <div class="row">
@@ -77,6 +92,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
@@ -90,6 +106,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
                 </div>
             </div>

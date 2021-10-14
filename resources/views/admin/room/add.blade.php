@@ -26,6 +26,12 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">
+                                <label>No. of Rooms <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" name="no_rooms" min="1" step="1" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
                                 <label>Weekdays <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" name="price_wd" min="1" step="1" required>
                             </div>

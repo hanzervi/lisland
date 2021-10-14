@@ -24,7 +24,7 @@
             min-width: 100px !important;
         }
 
-        #food-drink-preview, #food-drink-preview-update, #id-card-preview {
+        .food-drink {
             height: 260px;
             width: 360px;
             object-fit: cover;

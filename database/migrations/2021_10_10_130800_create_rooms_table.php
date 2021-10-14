@@ -17,8 +17,9 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->string('images');
+            $table->text('images');
             $table->string('image360');
+            $table->integer('no_rooms');
             $table->float('price_wd');
             $table->float('price_we');
             $table->tinyInteger('adults')->default(0)->nullable();

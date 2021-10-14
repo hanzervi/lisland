@@ -51,19 +51,37 @@
     });
 
     $('[name=food-image]').on('change', function() {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById("food-drink-preview").src = e.target.result;
-        };
-        reader.readAsDataURL(this.files[0]);
+        $('#ph-image').empty();
+        for (i = 0; i < this.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#ph-image').append(
+                    '<div class="col-lg-12">'+
+                        '<div class="form-group">'+
+                            '<img class="img-fluid food-drink" src="'+e.target.result+'">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
     });
 
     $('[name=update_food-image]').on('change', function() {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById("food-drink-preview-update").src = e.target.result;
-        };
-        reader.readAsDataURL(this.files[0]);
+        $('#update_ph-image').empty();
+        for (i = 0; i < this.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#update_ph-image').append(
+                    '<div class="col-lg-12">'+
+                        '<div class="form-group">'+
+                            '<img class="img-fluid food-drink" src="'+e.target.result+'">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
     });
 
     function callDt() {
@@ -133,7 +151,7 @@
                                                 callDt();
                                                 $('#addModal').modal('hide');
                                                 $('#addForm').trigger('reset');
-                                                $('#food-drink-preview').prop('src', '{{ asset('public/storage/fooddrink/noimage.png') }}')
+                                                $('#ph-image').empty();
                                             },
                                         }
                                     });
@@ -202,6 +220,8 @@
     }
 
     function update(id) {
+        $('#update_ph-image').empty();
+
         $('#updateModal').modal({
             backdrop:'static'
         });
@@ -211,13 +231,19 @@
             type: "GET",
             success: function(items) {
                 $.each(items, function (i, item) {
-                    $('#food-drink-preview-update').prop('src', '{{ asset('public/storage/fooddrink/') }}/'+item.image);
-
                     $('[name=update_id]').val(item.id);
                     $('[name=update_name]').val(item.name);
                     $('[name=update_description]').val(item.description);
                     $('[name=update_category]').val(item.category);
                     $('[name=update_price]').val(item.price);
+
+                    $('#update_ph-image').append(
+                        '<div class="col-lg-12">'+
+                            '<div class="form-group">'+
+                                '<img class="img-fluid food-drink" src="{{ asset('public/storage/fooddrink') }}/'+item.image+'">'+
+                            '</div>'+
+                        '</div>'
+                    )
 
                     $('.select2').select2();
                 });

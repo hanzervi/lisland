@@ -41,6 +41,7 @@
                     <div class="col-lg-12">
                         <div class="row" id="view_ph-image360">
                         </div>
+                        <hr>
                     </div>
                 </div>
             </div>

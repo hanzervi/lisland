@@ -28,6 +28,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>No. of Rooms</th>
                             <th>Weekdays</th>
                             <th>Weekend</th>
                             <th></th>
@@ -65,6 +66,9 @@
                 },
                 {
                     data: 'description'
+                },
+                {
+                    data: 'no_rooms'
                 },
                 {
                     data: 'price_wd',
@@ -279,6 +283,7 @@
                     $('[name=update_id]').val(item.id);
                     $('[name=update_name]').val(item.name);
                     $('[name=update_description]').val(item.description);
+                    $('[name=update_no_rooms]').val(item.no_rooms);
                     $('[name=update_price_wd]').val(item.price_wd);
                     $('[name=update_price_we]').val(item.price_we);
                     $('[name=update_adults]').val(item.adults);
@@ -378,11 +383,12 @@
                 $.each(items, function (i, item) {
                     $('[name=view_name]').html(item.name);
                     $('[name=view_description]').html(item.description);
-                    $('[name=view_price_wd]').html(item.price_wd);
-                    $('[name=view_price_we]').html(item.price_we);
+                    $('[name=view_no_rooms]').html(item.no_rooms);
+                    $('[name=view_price_wd]').html(item.price_wd.toLocaleString());
+                    $('[name=view_price_we]').html(item.price_we.toLocaleString());
                     $('[name=view_adults]').html(item.adults);
-                    $('[name=view_children]').html(item.children);
-                    $('[name=view_infants]').html(item.infants);
+                    $('[name=view_children]').html(item.children == null ? 0 : item.children);
+                    $('[name=view_infants]').html(item.infants == null ? 0 : item.infants);
                     $('[name=view_includes]').html(item.includes);
 
                     $.each(JSON.parse(item.images), function(x, image) {

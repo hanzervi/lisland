@@ -11,6 +11,7 @@ class Room extends Model
         'description',
         'images',
         'image360',
+        'no_rooms',
         'price_wd',
         'price_we',
         'adults',

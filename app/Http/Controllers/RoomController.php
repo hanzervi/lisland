@@ -64,6 +64,7 @@ class RoomController extends Controller
             $input = [
                 'name' => $request->name,
                 'description' => $request->description,
+                'no_rooms' => $request->no_rooms,
                 'price_wd' => $request->price_wd,
                 'price_we' => $request->price_we,
                 'adults' => $request->adults,
@@ -118,6 +119,7 @@ class RoomController extends Controller
             $input = [
                 'name' => $request->update_name,
                 'description' => $request->update_description,
+                'no_rooms' => $request->update_no_rooms,
                 'price_wd' => $request->update_price_wd,
                 'price_we' => $request->update_price_we,
                 'adults' => $request->update_adults,

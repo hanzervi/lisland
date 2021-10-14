@@ -11,13 +11,15 @@
                 <input type="text" name="update_id" hidden>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <div class="col-lg-12">
                             <div class="form-group">
-                                <img class="food-drink-img img-fluid" id="food-drink-preview-update" src="{{ asset('public/storage/fooddrink/noimage.png') }}"
-                                    style="cursor: pointer" onclick="$('[name=update_food-image]').trigger('click');">
-                                    <input type="file" class="form-control-file" name="update_food-image" accept="image/png, image/jpeg" hidden>
-                                    <br>
-                                    <small>Click image to change . . .</small>
+                                <label>Image</label>
+                                <br>
+                                <input type="file" name="update_food-image" accept="image/png, image/jpeg">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row" id="update_ph-image">
                             </div>
                         </div>
                         <div class="col-lg-12">
