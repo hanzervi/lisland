@@ -18,7 +18,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Admin</b> Lisland</a>
+            <a href="#"><b>Admin</b> {{ config('app.name', 'Laravel') }}</a>
         </div>
 
         <div class="card">
