@@ -17,11 +17,10 @@ class CreateCustomersTable extends Migration
             $table->bigIncrements('id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('birthdate');
-            $table->string('sex');
             $table->string('address');
-            $table->string('idcard')->default('noimage.png');
-            $table->tinyInteger('status')->default(1);
+            $table->string('sex');
+            $table->string('contact_no');
+            $table->string('email')->nullable()->default(null);
             $table->integer('created_by')->unsgined();
             $table->timestamps();
         });

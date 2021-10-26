@@ -156,7 +156,7 @@
         </div>
 
         <footer class="main-footer">
-            <strong>Copyright &copy; {{ date('Y') }} Lisland.</strong>
+            <strong>Copyright &copy; {{ date('Y') . ' ' . config('app.name', 'Laravel') }}.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0.0
@@ -199,6 +199,24 @@
 
             $('.select2').select2();
             $('.select2').width('100%');
+
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            } 
+                
+            today = yyyy + '-' + mm + '-' + dd;
+            $('input[type="date"]').attr('min', today);
+
         });
 
         function profile(id) {

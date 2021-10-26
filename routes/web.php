@@ -21,6 +21,12 @@ Route::get('/admin', function() {
     return redirect('login');
 });
 
+Route::get('/admin/booking/onsite', 'BookOnsiteController@index');
+Route::get('/admin/booking/onsite/table', 'BookOnsiteController@table');
+Route::post('/admin/booking/onsite/check-room-capacity', 'BookOnsiteController@checkRoomCapacity');
+Route::post('/admin/booking/onsite/check-room', 'BookOnsiteController@checkRoom');
+Route::post('/admin/booking/onsite/add', 'BookOnsiteController@add');
+
 Route::get('/admin/room/', 'RoomController@index');
 Route::get('/admin/room/table', 'RoomController@table');
 Route::get('/admin/room/get/{id}', 'RoomController@get');
