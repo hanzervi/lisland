@@ -27,17 +27,43 @@ class BookOnsiteController extends Controller
 
     public function table(Request $request) {
         if ($request->ajax()) {
-            return DB::table('books')
+            $data = DB::table('books')
                         ->selectRaw('
-                            rooms.name as room,
+                            books.id, rooms.name as room,
                             CONCAT(customers.firstname, " ", customers.lastname) as customer,
-                            (books.adults + books.children + books.infants + books.add_person) as pax,
+                            books.adults, books.children, books.infants, books.add_person,
                             books.check_in, books.check_out, books.priceTotal, books.status, books.remarks
                         ')
                         ->join('rooms', 'rooms.id', '=', 'books.room_id')
                         ->join('customers', 'customers.id', '=', 'books.customer_id')
                         ->where('books.status', '!=', '-1')
                         ->get();
+
+            foreach($data as $item) {
+                $item->pax = $item->adults + ($item->children = null ? 0 : $item->children) + ($item->infants = null ? 0 : $item->infants) + ($item->add_person = null ? 0 : $item->add_person);
+            }
+
+            return $data;
+        }
+        
+        return response()->json(['error' => 'Unauthorized.'], 401);
+    }
+
+    public function get(Request $request, $id) {
+        if ($request->ajax()) {
+            $data = DB::table('books')
+                        ->selectRaw('
+                            books.id, rooms.name as room,
+                            books.adults, books.children, books.infants, books.add_person, books.check_in, books.check_out,
+                            customers.firstname, customers.lastname, customers.address, customers.sex, customers.contact_no, customers.email,
+                            books.remarks
+                        ')
+                        ->join('rooms', 'rooms.id', '=', 'books.room_id')
+                        ->join('customers', 'customers.id', '=', 'books.customer_id')
+                        ->where('books.id', '=', $id)
+                        ->get();
+
+            return $data;
         }
         
         return response()->json(['error' => 'Unauthorized.'], 401);
@@ -79,20 +105,17 @@ class BookOnsiteController extends Controller
 
         $totalActive = Book::where('room_id', '=', $request->room_id)
             ->where('status', '=', 0)
-            ->where('status', '=', 1)
+            ->orWhere('status', '=', 1)
+            ->orWhere('status', '=', 2)
             ->count();
 
         if ($totalActive < $totalRoom->no_rooms)
             return response()->json(['status' => 'available', 'price' => $priceTotal]);
         else {
-            $check = Book::where('room_id', '=', $request->room_id)
-                    ->where('status', '!=', -1)
-                    ->where('status', '!=', 2)
-                    ->where('check_in', '<=', $request->check_in)
-                    ->where('check_out', '>=', $request->check_in)
+            $check = Book::whereRaw('room_id = '.$request->room_id.' and (check_in <= "'.$request->check_in.'" and check_out >= "'.$request->check_in.'") and (status != -1 or status != 3)')
                     ->count();
 
-            if ($check > 0)
+            if ($check < $totalRoom->no_rooms)
                 return response()->json(['status' => 'available', 'price' => $priceTotal]);
             else
                 return response()->json(['status' => 'unavailable', 'price' => 0]);
@@ -172,6 +195,28 @@ class BookOnsiteController extends Controller
                     'created_by' => Auth::id()
                 ]);
             }
+
+            return 'success';
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateStatus($id, $status) {
+        try {
+            Book::whereId($id)
+            ->update(['status' => $status]);
+
+            return 'success';
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function remarksUpdate(Request $request) {
+        try {
+            Book::whereId($request->remarks_id)
+                ->update(['remarks' => $request->remarks_remarks]);
 
             return 'success';
         } catch (\Exception $e) {

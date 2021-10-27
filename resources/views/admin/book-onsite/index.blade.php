@@ -38,9 +38,9 @@
     </div>
 </div>
 
-{{-- @include('admin.pool.view') --}}
+@include('admin.book-onsite.view')
 @include('admin.book-onsite.add')
-{{-- @include('admin.pool.update') --}}
+@include('admin.book-onsite.remarks')
 
 @endsection
 
@@ -86,9 +86,11 @@
                         if (data == 0)
                             return '<span class="text-warning">Pending</span>';
                         else if (data == 1) 
-                            return '<span class="text-success">Active</span>';
+                            return '<span class="text-info">Reserved</span>';
                         else if (data == 2)
-                            return '<span class="text-info">Checked Out</span>';
+                            return '<span class="text-success">Checked In</span>';
+                        else if (data == 3)
+                            return '<span class="text-warning">Checked Out</span>';
                     }
                 },
                 {
@@ -97,11 +99,50 @@
                 {
                     data: 'id',
                     render: function (data, type, row) {
-                        return '<div class="btn-group float-right">' +
-                                    '<a href="javascript:void(0)" type="button" class="btn btn-info" onclick="view('+data+')"><i class="fas fa-eye"></i></a>' +
-                                    '<a href="javascript:void(0)" type="button" class="btn btn-primary" onclick="update('+data+')"><i class="fas fa-edit"></i></a>' +
-                                    '<a href="javascript:void(0)" type="button" class="btn btn-danger" onclick="remove('+data+')"><i class="fas fa-trash"></i></a>' +
-                                '</div>';
+                        if (row['status'] == 0) {
+                            return '<div class="btn-group">'+
+                                        '<button type="button" class="btn btn-default" onclick="remarks('+data+')"><i class="fas fa-marker"></i></button>'+
+                                        '<button type="button" class="btn btn-info" onclick="view('+data+')"><i class="fas fa-eye"></i></button>'+
+                                        '<button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">'+
+                                            '<span class="sr-only">Toggle Dropdown</span>'+
+                                        '</button>'+
+                                        '<div class="dropdown-menu dropdown-menu-right" role="menu">'+
+                                            '<a class="dropdown-item text-info" href="javascript:void(0)" onclick="updateStatus('+data+', 1)">Reserve</a>'+
+                                            '<a class="dropdown-item" href="javascript:void(0)" onclick="updateStatus('+data+', -1)">Cancel</a>'+
+                                        '</div>'+
+                                    '</div>';
+                        }
+                        else if (row['status'] == 1) {
+                            return '<div class="btn-group">'+
+                                        '<button type="button" class="btn btn-default" onclick="remarks('+data+')"><i class="fas fa-marker"></i></button>'+
+                                        '<button type="button" class="btn btn-info" onclick="view('+data+')"><i class="fas fa-eye"></i></button>'+
+                                        '<button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">'+
+                                            '<span class="sr-only">Toggle Dropdown</span>'+
+                                        '</button>'+
+                                        '<div class="dropdown-menu dropdown-menu-right" role="menu">'+
+                                            '<a class="dropdown-item text-success" href="javascript:void(0)" onclick="updateStatus('+data+', 2)">Check In</a>'+
+                                            '<a class="dropdown-item" href="javascript:void(0)" onclick="updateStatus('+data+', -1)">Cancel</a>'+
+                                        '</div>'+
+                                    '</div>';
+                        }
+                        else if (row['status'] == 2) {
+                            return '<div class="btn-group">'+
+                                        '<button type="button" class="btn btn-default" onclick="remarks('+data+')"><i class="fas fa-marker"></i></button>'+
+                                        '<button type="button" class="btn btn-info" onclick="view('+data+')"><i class="fas fa-eye"></i></button>'+
+                                        '<button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">'+
+                                            '<span class="sr-only">Toggle Dropdown</span>'+
+                                        '</button>'+
+                                        '<div class="dropdown-menu dropdown-menu-right" role="menu">'+
+                                            '<a class="dropdown-item text-warning" href="javascript:void(0)" onclick="updateStatus('+data+', 3)">Check Out</a>'+
+                                        '</div>'+
+                                    '</div>';
+                        }
+                        else {
+                            return '<div class="btn-group">'+
+                                        '<button type="button" class="btn btn-default" onclick="remarks('+data+')"><i class="fas fa-marker"></i></button>'+
+                                        '<button type="button" class="btn btn-info" onclick="view('+data+')"><i class="fas fa-eye"></i></button>'+
+                                    '</div>';
+                        }
                     }
                 },
             ]
@@ -162,6 +203,15 @@
                     );
                     $('#checkRoom').fadeIn();
                 }
+                else if (result.status == 'unavailable'){
+                    $('#checkRoom').hide();
+                    $('#checkRoom').html(
+                        '<div class="alert mt-1 alert-danger" role="alert">'+
+                            'Room unavailable, choose other room or adjust the check in date.'+
+                        '</div>'
+                    );
+                    $('#checkRoom').fadeIn();
+                }
                 console.log(result.status);
             }
         });
@@ -202,6 +252,10 @@
                                                 $('#addModal').modal('hide');
                                                 $('#addForm').trigger('reset');
                                                 $('#checkRoom').hide();
+
+                                                $('[name=room_id]').val('');
+                                                $('[name=sex]').val('');
+                                                $('.select2').select2();
                                             },
                                         }
                                     });
@@ -222,6 +276,293 @@
             }
         });
     });
+
+    function updateStatus(id, status) {
+        if (status == -1) {
+            $.confirm({
+                animation: 'none',
+                theme: 'dark',
+                title: 'Cancel',
+                content: 'Book will be cancelled, continue?',
+                buttons: {
+                    No: function () {
+                        //
+                    },
+                    Yes: {
+                        btnClass: 'btn-dark',
+                        action: function () {
+                            $.ajax({
+                                url: '{{ url("/admin/booking/onsite/status") }}/'+id+'/'+status,
+                                method: 'get',
+                                success: function (result) {
+                                    if (result == 'success') {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Success!',
+                                            content: 'Book has been cancelled.',
+                                            buttons: {
+                                                OK: function () {
+                                                    callDt();
+                                                },
+                                            }
+                                        });
+                                    } 
+                                    else {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Failed!',
+                                            content: 'Book has failed to cancel.'
+                                        });
+                                        console.log(result);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                }
+            });
+        }
+        else if (status == 1) {
+            $.confirm({
+                animation: 'none',
+                theme: 'dark',
+                title: 'Reserve',
+                content: 'Book will be reserved, continue?',
+                buttons: {
+                    No: function () {
+                        //
+                    },
+                    Yes: {
+                        btnClass: 'btn-dark',
+                        action: function () {
+                            $.ajax({
+                                url: '{{ url("/admin/booking/onsite/status") }}/'+id+'/'+status,
+                                method: 'get',
+                                success: function (result) {
+                                    if (result == 'success') {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Success!',
+                                            content: 'Book has been reserved.',
+                                            buttons: {
+                                                OK: function () {
+                                                    callDt();
+                                                },
+                                            }
+                                        });
+                                    } 
+                                    else {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Failed!',
+                                            content: 'Book has failed to reserve.'
+                                        });
+                                        console.log(result);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                }
+            });
+        }
+        else if (status == 2) {
+            $.confirm({
+                animation: 'none',
+                theme: 'dark',
+                title: 'Check In',
+                content: 'Book will be checked in, continue?',
+                buttons: {
+                    No: function () {
+                        //
+                    },
+                    Yes: {
+                        btnClass: 'btn-dark',
+                        action: function () {
+                            $.ajax({
+                                url: '{{ url("/admin/booking/onsite/status") }}/'+id+'/'+status,
+                                method: 'get',
+                                success: function (result) {
+                                    if (result == 'success') {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Success!',
+                                            content: 'Book has been checked in.',
+                                            buttons: {
+                                                OK: function () {
+                                                    callDt();
+                                                },
+                                            }
+                                        });
+                                    } 
+                                    else {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Failed!',
+                                            content: 'Book has failed to check in.'
+                                        });
+                                        console.log(result);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                }
+            });
+        }
+        else if (status == 3) {
+            $.confirm({
+                animation: 'none',
+                theme: 'dark',
+                title: 'Cancel',
+                content: 'Book will be checked out, continue?',
+                buttons: {
+                    No: function () {
+                        //
+                    },
+                    Yes: {
+                        btnClass: 'btn-dark',
+                        action: function () {
+                            $.ajax({
+                                url: '{{ url("/admin/booking/onsite/status") }}/'+id+'/'+status,
+                                method: 'get',
+                                success: function (result) {
+                                    if (result == 'success') {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Success!',
+                                            content: 'Book has been checked out.',
+                                            buttons: {
+                                                OK: function () {
+                                                    callDt();
+                                                },
+                                            }
+                                        });
+                                    } 
+                                    else {
+                                        $.alert({
+                                            animation: 'none',
+                                            theme: 'dark',
+                                            title: 'Failed!',
+                                            content: 'Book has failed to check out.'
+                                        });
+                                        console.log(result);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                }
+            });
+        }
+    }
+
+    function remarks(id) {
+        $('#remarksModal').modal({
+            backdrop:'static'
+        });
+
+        $.ajax({
+            url: "{{ url('/admin/booking/onsite/get') }}/"+id,
+            type: "GET",
+            success: function(items) {
+                $.each(items, function (i, item) {
+                    $('[name=remarks_id]').val(item.id);
+                    $('[name=remarks_remarks]').val(item.remarks);
+                });
+            }
+        });
+    }
+
+    $('#remarksForm').on('submit', function() {
+        let uf = $('#remarksForm');
+        let fd = new FormData(uf[0]);
+
+        $.confirm({
+            animation: 'none',
+            theme: 'dark',
+            title: 'Update',
+            content: 'Item be updated, continue?',
+            buttons: {
+                No: function () {
+                    //
+                },
+                Yes: {
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: '{{ url("/admin/booking/onsite/remarks-update") }}',
+                            method: 'post',
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (result) {
+                                if (result == 'success') {
+                                    $.alert({
+                                        animation: 'none',
+                                        theme: 'dark',
+                                        title: 'Success!',
+                                        content: 'Item has been updated.',
+                                        buttons: {
+                                            OK: function () {
+                                                callDt();
+                                                $('#remarksModal').modal('hide');
+                                            },
+                                        }
+                                    });
+                                } 
+                                else {
+                                    $.alert({
+                                        animation: 'none',
+                                        theme: 'dark',
+                                        title: 'Failed!',
+                                        content: 'Item has failed to update.'
+                                    });
+                                    console.log(result);
+                                }
+                            }
+                        });
+                    }
+                },
+            }
+        });
+    });
+
+    function view(id) {
+        $('#viewModal').modal({
+            backdrop:'static'
+        });
+
+        $.ajax({
+            url: "{{ url('/admin/booking/onsite/get') }}/"+id,
+            type: "GET",
+            success: function(items) {
+                $.each(items, function (i, item) {
+                    $('[name=view_room]').html(item.room);
+                    $('[name=view_adults]').html(item.adults);
+                    $('[name=view_children]').html(item.children == null ? 0 : item.children);
+                    $('[name=view_infants]').html(item.infants == null ? 0 : item.infants);
+                    $('[name=view_add_person]').html(item.add_person == null ? 0 : item.add_person);
+                    $('[name=view_check_in]').html(item.check_in);
+                    $('[name=view_check_out]').html(item.check_out);
+                    $('[name=view_firstname]').html(item.firstname);
+                    $('[name=view_lastname]').html(item.lastname);
+                    $('[name=view_address]').html(item.address);
+                    $('[name=view_sex]').html(item.sex);
+                    $('[name=view_contact_no]').html(item.contact_no);
+                    $('[name=view_email]').html(item.email == null ? '--' : item.email);
+                    $('[name=view_remarks]').html(item.remarks == null ? '--' : item.remarks);
+                });
+            }
+        });
+    }
 
 </script>
 @endsection

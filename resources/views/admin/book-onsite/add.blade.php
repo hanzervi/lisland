@@ -111,6 +111,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
+                            <hr>
                             <div class="form-group">
                                 <label>Remarks</label>
                                 <input type="text" class="form-control" name="remarks">

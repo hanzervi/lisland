@@ -25,7 +25,7 @@ class CreateBooksTable extends Migration
             $table->date('check_in');
             $table->date('check_out');
             $table->float('priceTotal');
-            $table->tinyInteger('status')->default(1)->comment('-1 = delete; 0 = pending; 1 = reserved; 2 = checkout;');
+            $table->tinyInteger('status')->default(1)->comment('-1 = delete; 0 = pending; 1 = reserved; 2 = checkedin; 3 = checkedout');
             $table->string('remarks')->nullable()->default(null);
             $table->integer('created_by')->unsigned();
             $table->timestamps();
