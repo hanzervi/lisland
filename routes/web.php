@@ -48,6 +48,9 @@ Route::post('/admin/booking/onsite/check-room', 'BookOnsiteController@checkRoom'
 Route::post('/admin/booking/onsite/add', 'BookOnsiteController@add');
 Route::post('/admin/booking/onsite/remarks-update', 'BookOnsiteController@remarksUpdate');
 
+Route::get('/admin/customer', 'CustomerController@index');
+Route::get('/admin/customer/table', 'CustomerController@table');
+
 Route::get('/admin/room/', 'RoomController@index');
 Route::get('/admin/room/table', 'RoomController@table');
 Route::get('/admin/room/get/{id}', 'RoomController@get');
