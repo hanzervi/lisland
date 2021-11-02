@@ -15,7 +15,7 @@ class BookOnsiteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'checkRoomCapacity']);
     }
 
     public function index() {
@@ -37,6 +37,7 @@ class BookOnsiteController extends Controller
                         ->join('rooms', 'rooms.id', '=', 'books.room_id')
                         ->join('customers', 'customers.id', '=', 'books.customer_id')
                         ->where('books.status', '!=', '-1')
+                        ->where('books.type', '=', 'onsite')
                         ->get();
 
             foreach($data as $item) {

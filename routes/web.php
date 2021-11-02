@@ -20,6 +20,9 @@ Route::get('/pool/view/', 'WebsiteController@poolView');
 Route::get('/ktv/view/', 'WebsiteController@ktvView');
 Route::get('/urduja-pavilion/view/', 'WebsiteController@urdujaView');
 Route::get('/conference/view/', 'WebsiteController@conferenceView');
+Route::get('/conference/view/', 'WebsiteController@conferenceView');
+Route::post('/booking/online/check-room', 'WebsiteController@checkRoom');
+Route::post('/booking/online/add', 'WebsiteController@addBook');
 
 Auth::routes();
 
