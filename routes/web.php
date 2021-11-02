@@ -32,6 +32,8 @@ Route::get('/admin', function() {
     return redirect('login');
 });
 
+Route::get('/admin/dashboard', 'DashboardController@index');
+
 Route::get('/admin/booking/online', 'BookOnlineController@index');
 Route::get('/admin/booking/online/table', 'BookOnlineController@table');
 Route::get('/admin/booking/online/get/{id}', 'BookOnlineController@get');
