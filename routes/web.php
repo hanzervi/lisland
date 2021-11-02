@@ -32,6 +32,13 @@ Route::get('/admin', function() {
     return redirect('login');
 });
 
+Route::get('/admin/booking/online', 'BookOnlineController@index');
+Route::get('/admin/booking/online/table', 'BookOnlineController@table');
+Route::get('/admin/booking/online/get/{id}', 'BookOnlineController@get');
+Route::get('/admin/booking/online/status/{id}/{status}', 'BookOnlineController@updateStatus');
+Route::get('/admin/booking/online/count-pending', 'BookOnlineController@countPending');
+Route::post('/admin/booking/online/update', 'BookOnlineController@update');
+
 Route::get('/admin/booking/onsite', 'BookOnsiteController@index');
 Route::get('/admin/booking/onsite/table', 'BookOnsiteController@table');
 Route::get('/admin/booking/onsite/get/{id}', 'BookOnsiteController@get');

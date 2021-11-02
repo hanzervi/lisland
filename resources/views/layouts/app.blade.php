@@ -103,7 +103,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/admin/booking/online') }}" class="nav-link {{ Request::is('admin/booking/online') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Online <span class="right badge badge-danger">New</span></p>
+                                        <p>Online <span class="right badge badge-warning" id="countPending" style="display: none"></span></p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -217,7 +217,25 @@
             today = yyyy + '-' + mm + '-' + dd;
             $('input[type="date"]').attr('min', today);
 
+
+            countPending();
         });
+
+        function countPending() {
+            $.ajax({
+                url: "{{ url('/admin/booking/online/count-pending') }}",
+                type: "GET",
+                success: function(result) {
+                    if (result > 0) {
+                        $('#countPending').html(result);
+                        $('#countPending').css('display', 'block');
+                    }
+                    else {
+                        $('#countPending').css('display', 'none');
+                    }
+                }
+            });
+        }
 
         function profile(id) {
             $('#profileModal').modal({
