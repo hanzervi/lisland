@@ -12,6 +12,14 @@
 */
 
 Route::get('/', 'WebsiteController@index');
+Route::get('/resto-bar/view/', 'WebsiteController@restoBarView');
+Route::get('/packages/view/', 'WebsiteController@packagesView');
+Route::get('/tours/view/', 'WebsiteController@toursView');
+Route::get('/room/view/{id}', 'WebsiteController@roomView');
+Route::get('/pool/view/', 'WebsiteController@poolView');
+Route::get('/ktv/view/', 'WebsiteController@ktvView');
+Route::get('/urduja-pavilion/view/', 'WebsiteController@urdujaView');
+Route::get('/conference/view/', 'WebsiteController@conferenceView');
 
 Auth::routes();
 

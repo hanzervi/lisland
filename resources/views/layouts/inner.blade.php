@@ -21,11 +21,19 @@
 
   <link href="{{ asset('public/assets/css/style.css') }}" rel="stylesheet">
 
+  <link rel="stylesheet" href="{{ asset('public/plugins/panorama-viewer/panorama_viewer.css') }}">
+
   <style>
-    .img-room {
+    .carousel-item-b {
       width: auto;
       height: 600px;
       object-fit: cover;
+    }
+
+    .panorama {
+        width: auto;
+        height: 600px;
+        margin: 50px 0 50px 0;
     }
   </style>
 
@@ -107,23 +115,23 @@
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link" href="#home">Home</a>
+            <a class="nav-link" href="{{ url('/#home') }}">Home</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link " href="#about">About</a>
+            <a class="nav-link " href="{{ url('/#about') }}">About</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link " href="#rooms">Rooms</a>
+            <a class="nav-link " href="{{ url('/#rooms') }}">Rooms</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link " href="#amenities">Amenities</a>
+            <a class="nav-link " href="{{ url('/#amenities') }}">Amenities</a>
           </li>
 
           {{-- <li class="nav-item">
-            <a class="nav-link " href="#contact">Contact</a>
+            <a class="nav-link " href="{{ url('/#contact') }}">Contact</a>
           </li> --}}
 
         </ul>
@@ -135,38 +143,6 @@
 
     </div>
   </nav>
-
-  <div class="intro swiper position-relative" id="home">
-
-    <div class="swiper-wrapper">
-
-      <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({{ asset('public/assets/img/home-bg.jpg') }})">
-        <div class="overlay overlay-a"></div>
-        <div class="intro-content display-table">
-          <div class="table-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8">
-                  <div class="intro-body">
-                    <p class="intro-title-top">182 McArthur Highway
-                      <br> Urdaneta City
-                    </p>
-                    <h1 class="intro-title mb-4">
-                      <span class="color-b">Lisland</span>
-                      <br> Rainforest Resort
-                    </h1>
-                    <p class="intro-subtitle intro-price">
-                      <a href="#main"><span class="price-a">Get Started</span></a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <main id="main">
     @yield('content')
@@ -206,19 +182,19 @@
               <div class="w-body-a">
                 <ul class="list-unstyled">
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#home">Home</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{ url('/#home') }}">Home</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#about">About</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{ url('/#about') }}">About</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#rooms">Rooms</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{ url('/#rooms') }}">Rooms</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#amenities">Amenities</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{ url('/#amenities') }}">Amenities</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#contact">Contact</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{ url('/#contact') }}">Contact</a>
                   </li>
                 </ul>
               </div>

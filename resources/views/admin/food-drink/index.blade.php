@@ -152,6 +152,8 @@
                                                 $('#addModal').modal('hide');
                                                 $('#addForm').trigger('reset');
                                                 $('#ph-image').empty();
+
+                                                $('.select2').select2();
                                             },
                                         }
                                     });

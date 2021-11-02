@@ -78,7 +78,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <a href="{{ url('/admin') }}" class="brand-link">
-                <img src="{{ asset('public/assets/img/lisland-icon.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('public/assets/img/lisland-icon.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Lisland</span>
             </a>

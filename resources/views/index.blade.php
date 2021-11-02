@@ -7,7 +7,7 @@
         <div class="col-md-12">
           <div class="title-wrap d-flex justify-content-between">
             <div class="title-box">
-              <h2 class="title-a mb-4">Abous Us</h2>
+              <h2 class="title-a mb-4">About Us</h2>
               <p>Lisland Rainforest Resort is a paradise within the city with a 1,500 sq. meter main swimming pool, with a 
                 150 sq. meter childrens wading pool. It has a 200 sitting capacity bar and restaurant, conference hall, 
                 a pavilion and picnic and garden area. Lisland caters to wedding ceremonies and receptions, conferences, 
@@ -35,7 +35,7 @@
               </p>
             </div>
             <div class="card-footer-c">
-              <a href="#" class="link-c link-icon">View
+              <a href="{{ url('/resto-bar/view') }}" class="link-c link-icon">View
                 <span class="bi bi-chevron-right"></span>
               </a>
             </div>
@@ -59,7 +59,7 @@
               </p>
             </div>
             <div class="card-footer-c">
-              <a href="#" class="link-c link-icon">View
+              <a href="{{ url('/packages/view') }}" class="link-c link-icon">View
                 <span class="bi bi-chevron-right"></span>
               </a>
             </div>
@@ -83,7 +83,7 @@
               </p>
             </div>
             <div class="card-footer-c">
-              <a href="#" class="link-c link-icon">View
+              <a href="{{ url('/tours/view') }}" class="link-c link-icon">View
                 <span class="bi bi-chevron-right"></span>
               </a>
             </div>
@@ -93,250 +93,79 @@
     </div>
   </section>
 
-  <section class="section-rooms section-t8" id="rooms">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="title-wrap d-flex justify-content-between">
-            <div class="title-box">
-              <h2 class="title-a">Our Rooms</h2>
+  @if (count($data['room']) > 0)
+    <section class="section-rooms section-t8" id="rooms">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="title-wrap d-flex justify-content-between">
+              <div class="title-box">
+                <h2 class="title-a">Our Rooms</h2>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div id="property-carousel" class="swiper">
-        <div class="swiper-wrapper">
+        <div id="property-carousel" class="swiper">
+          <div class="swiper-wrapper">
 
-          <div class="carousel-item-b swiper-slide">
-            <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img src="{{ asset('public/assets/img/rooms/the-lodge.jpg') }}" alt="" class="img-a img-fluid">
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="property-single.html">The Lodge</a>
-                    </h2>
+            @foreach ($data['room'] as $item)
+
+              @php
+                  $image = str_replace('[', '', $item->images);
+                  $image = str_replace('"', '', $image);
+                  $image = str_replace(']', '', $image);
+
+                  $image = explode(',', $image);
+              @endphp
+
+              <div class="carousel-item-b swiper-slide">
+                <div class="card-box-a card-shadow">
+                  <div class="img-box-a">
+                    <img src="{{ asset('public/storage/room') . '/' . $image[0] }}" alt="" class="img-a img-fluid img-room">
                   </div>
-                  <div class="card-body-a">
+                  <div class="card-overlay">
+                    <div class="card-overlay-a-content">
+                      <div class="card-header-a">
+                        <h2 class="card-title-a">
+                          <a href="property-single.html">{{ $item->name }}</a>
+                        </h2>
+                      </div>
+                      <div class="card-body-a">
 
-                    <a href="#" class="link-a">View
-                      <span class="bi bi-chevron-right"></span>
-                    </a>
-                  </div>
-                  <div class="card-footer-a">
-                    <ul class="card-info d-flex justify-content-around">
-                      <li>
-                        <h4 class="card-info-title">Weekdays</h4>
-                        <span>Php. 6,300
-                        </span>
-                      </li>
-                      <li>
-                        <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                        <span>Php. 6,825</span>
-                      </li>
-                      <li>
-                    </ul>
+                        <a href="{{ url('room/view') . '/' . $item->id }}" class="link-a">View
+                          <span class="bi bi-chevron-right"></span>
+                        </a>
+                      </div>
+                      <div class="card-footer-a">
+                        <ul class="card-info d-flex justify-content-around">
+                          <li>
+                            <h4 class="card-info-title">Weekdays</h4>
+                            <span>Php. {{  number_format($item->price_wd) }}
+                            </span>
+                          </li>
+                          <li>
+                            <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
+                            <span>Php. {{ number_format($item->price_we) }}</span>
+                          </li>
+                          <li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            @endforeach
+
           </div>
-
-          <div class="carousel-item-b swiper-slide">
-            <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img src="{{ asset('public/assets/img/rooms/suite-room.jpg') }}" alt="" class="img-a img-fluid">
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="property-single.html">Suite Room</a>
-                    </h2>
-                  </div>
-                  <div class="card-body-a">
-
-                    <a href="#" class="link-a">View
-                      <span class="bi bi-chevron-right"></span>
-                    </a>
-                  </div>
-                  <div class="card-footer-a">
-                    <ul class="card-info d-flex justify-content-around">
-                      <li>
-                        <h4 class="card-info-title">Weekdays</h4>
-                        <span>Php. 5,040
-                        </span>
-                      </li>
-                      <li>
-                        <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                        <span>Php. 5,565</span>
-                      </li>
-                      <li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="carousel-item-b swiper-slide">
-            <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img src="{{ asset('public/assets/img/rooms/family-room.jpg') }}" alt="" class="img-a img-fluid">
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="property-single.html">Family Room</a>
-                    </h2>
-                  </div>
-                  <div class="card-body-a">
-
-                    <a href="#" class="link-a">View
-                      <span class="bi bi-chevron-right"></span>
-                    </a>
-                  </div>
-                  <div class="card-footer-a">
-                    <ul class="card-info d-flex justify-content-around">
-                      <li>
-                        <h4 class="card-info-title">Weekdays</h4>
-                        <span>Php. 4,525
-                        </span>
-                      </li>
-                      <li>
-                        <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                        <span>Php. 4,950</span>
-                      </li>
-                      <li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="carousel-item-b swiper-slide">
-            <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img src="{{ asset('public/assets/img/rooms/deluxe-room.jpg') }}" alt="" class="img-a img-fluid">
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="property-single.html">Deluxe Room</a>
-                    </h2>
-                  </div>
-                  <div class="card-body-a">
-
-                    <a href="#" class="link-a">View
-                      <span class="bi bi-chevron-right"></span>
-                    </a>
-                  </div>
-                  <div class="card-footer-a">
-                    <ul class="card-info d-flex justify-content-around">
-                      <li>
-                        <h4 class="card-info-title">Weekdays</h4>
-                        <span>Php. 4,090
-                        </span>
-                      </li>
-                      <li>
-                        <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                        <span>Php. 4,515</span>
-                      </li>
-                      <li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="carousel-item-b swiper-slide">
-            <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img src="{{ asset('public/assets/img/rooms/superior-room.jpg') }}" alt="" class="img-a img-fluid">
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="property-single.html">Superior Room</a>
-                    </h2>
-                  </div>
-                  <div class="card-body-a">
-
-                    <a href="#" class="link-a">View
-                      <span class="bi bi-chevron-right"></span>
-                    </a>
-                  </div>
-                  <div class="card-footer-a">
-                    <ul class="card-info d-flex justify-content-around">
-                      <li>
-                        <h4 class="card-info-title">Weekdays</h4>
-                        <span>Php. 3,460
-                        </span>
-                      </li>
-                      <li>
-                        <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                        <span>Php. 3,885</span>
-                      </li>
-                      <li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="carousel-item-b swiper-slide">
-            <div class="card-box-a card-shadow">
-              <div class="img-box-a">
-                <img src="{{ asset('public/assets/img/rooms/standard-room.jpg') }}" alt="" class="img-a img-fluid">
-              </div>
-              <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                  <div class="card-header-a">
-                    <h2 class="card-title-a">
-                      <a href="property-single.html">Standard Room</a>
-                    </h2>
-                  </div>
-                  <div class="card-body-a">
-                    <a href="#" class="link-a">View
-                      <span class="bi bi-chevron-right"></span>
-                    </a>
-                  </div>
-                  <div class="card-footer-a">
-                    <ul class="card-info d-flex justify-content-around">
-                      <li>
-                        <h4 class="card-info-title">Weekdays</h4>
-                        <span>Php. 2,725
-                        </span>
-                      </li>
-                      <li>
-                        <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                        <span>Php. 3,150</span>
-                      </li>
-                      <li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
+        <div class="propery-carousel-pagination carousel-pagination"></div>
+
       </div>
-      <div class="propery-carousel-pagination carousel-pagination"></div>
+    </section>
+  @endif
 
-    </div>
-  </section>
-
-  <section class="section-amenities section-t8" id="amenities">
+  <section class="section-amenities section-t8 mb-5" id="amenities">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -363,7 +192,7 @@
                       <a href="blog-single.html">Swimming Pool</a>
                     </h2>
                   </div>
-                  <a href="#" class="link-a">View
+                  <a href="{{ url('/pool/view') }}" class="link-a">View
                     <span class="bi bi-chevron-right"></span>
                   </a>
                 </div>
@@ -383,7 +212,7 @@
                       <a href="blog-single.html">KTV Rooms</a>
                     </h2>
                   </div>
-                  <a href="#" class="link-a">View
+                  <a href="{{ url('/ktv/view') }}" class="link-a">View
                     <span class="bi bi-chevron-right"></span>
                   </a>
                 </div>
@@ -403,7 +232,7 @@
                       <a href="blog-single.html">Urduja Pavilion</a>
                     </h2>
                   </div>
-                  <a href="#" class="link-a">View
+                  <a href="{{ url('/urduja-pavilion/view') }}" class="link-a">View
                     <span class="bi bi-chevron-right"></span>
                   </a>
                 </div>
@@ -423,7 +252,7 @@
                       <a href="blog-single.html">Conference Hall</a>
                     </h2>
                   </div>
-                  <a href="#" class="link-a">View
+                  <a href="{{ url('/conference/view') }}" class="link-a">View
                     <span class="bi bi-chevron-right"></span>
                   </a>
                 </div>
@@ -438,7 +267,7 @@
     </div>
   </section>
 
-  <section class="contact" id="contact">
+  {{-- <section class="contact" id="contact">
     <div class="intro-single">
       <div class="container">
         <div class="row">
@@ -492,5 +321,5 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> --}}
 @endsection
