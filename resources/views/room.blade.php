@@ -29,7 +29,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($image as $item)
                             <div class="carousel-item-b swiper-slide">
-                                <img src="{{ asset('public/storage/room') . '/' . $item }}" class="img-thumbnail" alt="">
+                                <img src="{{ asset('public/storage/room') . '/' . $item }}" class="img-fluid" alt="">
                             </div>
                         @endforeach
                     </div>
@@ -141,8 +141,11 @@
     </div>
 </section>
 
+@endsection
+
+@section('js')
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="{{ asset('public/plugins/panorama-viewer/jquery.panorama_viewer.js') }}"></script>
+<script src="{{ asset('public/plugins/panorama-viewer/jquery.panorama_viewer.js') }}"></script>
 
 <script>
 
@@ -160,5 +163,4 @@
         $('#image360').prop('src', '{{ asset('public/storage/room') }}/'+$image360);
     });
 </script>
-
 @endsection

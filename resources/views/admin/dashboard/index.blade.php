@@ -42,7 +42,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Checked In</span>
-                        <span class="info-box-number">{{ $data['pending'] }}</span>
+                        <span class="info-box-number">{{ $data['checkedin'] }}</span>
                     </div>
                 </div>
             </div>

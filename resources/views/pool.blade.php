@@ -34,14 +34,14 @@
                 <div class="col-lg-6">
                     <div class="row">
                         @foreach ($image as $img)
-                            <div class="col-lg-6 mb-3">
-                                <img src="{{ asset('public/storage/pool') .'/'. $img }}" height="300px" width="auto" class="img rounded" alt="">
+                            <div class="col-lg-12 mb-3">
+                                <img src="{{ asset('public/storage/pool') .'/'. $img }}" class="img-fluid" alt="">
                             </div>
                         @endforeach
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <p>{{ $item->description }}</p>
+                    <h3>{{ $item->description }}</h3>
                     <p>One of the highlights of this hotel is the large swimming pool surrounding the main building like a bluish lagoon reflecting the silhouette of the trees. What a pleasure to take a dip in its cool waters! You can relax in deckchairs, listening only to the sound of the birds that inhabit the little forest.</p>
                     <p>Entrance: P150/head (Adult/student/Child)</p>
                     <p> Children below 2 years old free of entrance</p>
