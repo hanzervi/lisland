@@ -287,9 +287,9 @@
                                     <li class="item-list-a">
                                         <i class="bi bi-chevron-right"></i> <a href="#amenities">Amenities</a>
                                     </li>
-                                    <li class="item-list-a">
+                                    {{-- <li class="item-list-a">
                                         <i class="bi bi-chevron-right"></i> <a href="#contact">Contact</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>

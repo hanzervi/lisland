@@ -121,7 +121,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/admin/room') }}" class="nav-link {{ Request::is('admin/room') ? 'active' : '' }}">
+                            <a href="{{ url('/admin/room') }}" class="nav-link {{ Request::is('admin/room') || Request::is('admin/room/*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>Room</p>
                             </a>
