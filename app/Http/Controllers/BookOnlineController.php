@@ -11,6 +11,8 @@ use App\Book;
 use App\Customer;
 use App\Room;
 
+use PHPMailer\PHPMailer;
+
 class BookOnlineController extends Controller
 {
     public function __construct()
@@ -78,8 +80,54 @@ class BookOnlineController extends Controller
 
     public function updateStatus($id, $status) {
         try {
-            // if status = 1 
-            // sms and email verification
+            
+            $cid = Book::find($id);
+            $customer = Customer::find($cid->customer_id);
+
+            if ($status == 1) {
+                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> Your reservation book status is now <b>RESERVED</b>. <br><br><br> - Lisland Management Team";
+
+                $mail               = new PHPMailer\PHPMailer(true);
+                
+                //$mail->SMTPDebug    = 1;
+                $mail->SMTPAuth     = true;
+                $mail->SMTPSecure   = 'tls';
+                $mail->Host         = "smtp.gmail.com";
+                $mail->Port         = 587;
+                $mail->IsHTML(true);
+                $mail->Username     = "pccartel.computers@gmail.com";
+                $mail->Password     = "admincartel";
+                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
+
+                $mail->Subject      = "Lisland Reservation Book Status";
+                $mail->Body         = $body;
+
+                $mail->AddAddress($customer->email);
+                
+                $mail->Send();
+            }
+            else if ($status == -1) {
+                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> Your reservation book status has been <b>CANCELLED</b>. <br><br><br> - Lisland Management Team";
+
+                $mail               = new PHPMailer\PHPMailer(true);
+                
+                //$mail->SMTPDebug    = 1;
+                $mail->SMTPAuth     = true;
+                $mail->SMTPSecure   = 'tls';
+                $mail->Host         = "smtp.gmail.com";
+                $mail->Port         = 587;
+                $mail->IsHTML(true);
+                $mail->Username     = "pccartel.computers@gmail.com";
+                $mail->Password     = "admincartel";
+                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
+
+                $mail->Subject      = "Lisland Reservation Book Status";
+                $mail->Body         = $body;
+
+                $mail->AddAddress($customer->email);
+                
+                $mail->Send();
+            }
 
             Book::whereId($id)
             ->update(['status' => $status]);
