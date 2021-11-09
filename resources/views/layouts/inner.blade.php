@@ -147,8 +147,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group mt-3">
-                        <label class="pb-2">Email</label>
-                        <input type="email" class="form-control" name="email">
+                        <label class="pb-2">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                 </div>
                 <div class="col-md-12">
