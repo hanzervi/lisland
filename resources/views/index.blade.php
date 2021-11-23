@@ -128,7 +128,7 @@
                     <div class="card-overlay-a-content">
                       <div class="card-header-a">
                         <h2 class="card-title-a">
-                          <a href="property-single.html">{{ $item->name }}</a>
+                          <a href="javascript:void(0)">{{ $item->name }}</a>
                         </h2>
                       </div>
                       <div class="card-body-a">
@@ -141,12 +141,12 @@
                         <ul class="card-info d-flex justify-content-around">
                           <li>
                             <h4 class="card-info-title">Weekdays</h4>
-                            <span>Php. {{  number_format($item->price_wd) }}
+                            <span>Php. {{  number_format($item->price_wd, 2) }}
                             </span>
                           </li>
                           <li>
                             <h4 class="card-info-title">Weekends (Fri-Sun)</h4>
-                            <span>Php. {{ number_format($item->price_we) }}</span>
+                            <span>Php. {{ number_format($item->price_we, 2) }}</span>
                           </li>
                           <li>
                         </ul>

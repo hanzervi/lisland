@@ -47,11 +47,11 @@
                     <p> Children below 2 years old free of entrance</p>
 
                     <h4 class="mt-5">PICNIC HUTS</h4>
-                    <p>Big Picnic Hut: P1,550</p>
-                    <p>Regular Picnic Huts: P750</p>
-                    <p>Long Table with 10 chairs: P330</p>
-                    <p>Round Table with 5 chairs: P280</p>
-                    <p>Extra Chairs: P30</p>
+                    <p>Big Picnic Hut: P1,550.00</p>
+                    <p>Regular Picnic Huts: P750.00</p>
+                    <p>Long Table with 10 chairs: P330.00</p>
+                    <p>Round Table with 5 chairs: P280.00</p>
+                    <p>Extra Chairs: P30.00</p>
 
                     <h4 class="mt-5">Rules & Regulations</h4>
                     <p><strong>Opening Hours: </strong> Monday - Sunday (9:00 AM - 10:00 PM)</p>

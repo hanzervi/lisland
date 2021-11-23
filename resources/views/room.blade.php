@@ -62,11 +62,11 @@
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         <strong>Price Weekdays:</strong>
-                                        <span>{{ number_format($data['getRoom']->price_wd) }}</span>
+                                        <span>{{ number_format($data['getRoom']->price_wd, 2) }}</span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         <strong>Price Weekends:</strong>
-                                        <span>{{ number_format($data['getRoom']->price_we) }}</span>
+                                        <span>{{ number_format($data['getRoom']->price_we, 2) }}</span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         <strong>Capacity Adults:</strong>

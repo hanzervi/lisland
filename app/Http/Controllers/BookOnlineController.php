@@ -87,46 +87,86 @@ class BookOnlineController extends Controller
             if ($status == 1) {
                 $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> Your reservation book status is now <b>RESERVED</b>. <br><br><br> - Lisland Management Team";
 
-                $mail               = new PHPMailer\PHPMailer(true);
+                $mail               = new PHPMailer\PHPMailer();
                 
                 //$mail->SMTPDebug    = 1;
-                $mail->SMTPAuth     = true;
-                $mail->SMTPSecure   = 'tls';
-                $mail->Host         = "smtp.gmail.com";
-                $mail->Port         = 587;
-                $mail->IsHTML(true);
-                $mail->Username     = "pccartel.computers@gmail.com";
-                $mail->Password     = "admincartel";
-                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'lislandresortph@gmail.com';
+                $mail->Password = 'mjbalangue611';
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
 
-                $mail->Subject      = "Lisland Reservation Book Status";
-                $mail->Body         = $body;
+                $mail->SetFrom("lislandresortph@gmail.com", "Lisland Management Team");
 
-                $mail->AddAddress($customer->email);
-                
-                $mail->Send();
+                $mail->addAddress($customer->email);
+
+                $mail->isHTML(true);
+                $mail->Subject = "Lisland Reservation Book Status";
+                $mail->Body    = $body;
+                $mail->send();
+
+                /* sms ----------------- */
+
+                $apicode = "TR-MARCO126898_4LJBY";
+                $passwd = ")cjry36gf4";
+                $number = $customer->contact_no;
+                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. - By Lisland Management Team.";
+
+                $url = 'https://www.itexmo.com/php_api/api.php';
+                $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
+                $param = array(
+                    'http' => array(
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method'  => 'POST',
+                        'content' => http_build_query($itexmo),
+                    ),
+                );
+                $context  = stream_context_create($param);
+                file_get_contents($url, false, $context);
             }
             else if ($status == -1) {
                 $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> Your reservation book status has been <b>CANCELLED</b>. <br><br><br> - Lisland Management Team";
 
-                $mail               = new PHPMailer\PHPMailer(true);
+                $mail               = new PHPMailer\PHPMailer();
                 
                 //$mail->SMTPDebug    = 1;
-                $mail->SMTPAuth     = true;
-                $mail->SMTPSecure   = 'tls';
-                $mail->Host         = "smtp.gmail.com";
-                $mail->Port         = 587;
-                $mail->IsHTML(true);
-                $mail->Username     = "pccartel.computers@gmail.com";
-                $mail->Password     = "admincartel";
-                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'lislandresortph@gmail.com';
+                $mail->Password = 'mjbalangue611';
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
 
-                $mail->Subject      = "Lisland Reservation Book Status";
-                $mail->Body         = $body;
+                $mail->SetFrom("lislandresortph@gmail.com", "Lisland Management Team");
 
-                $mail->AddAddress($customer->email);
-                
-                $mail->Send();
+                $mail->addAddress($customer->email);
+
+                $mail->isHTML(true);
+                $mail->Subject = "Lisland Reservation Book Status";
+                $mail->Body    = $body;
+                $mail->send();
+
+                /* sms ----------------- */
+
+                $apicode = "TR-MARCO126898_4LJBY";
+                $passwd = ")cjry36gf4";
+                $number = $customer->contact_no;
+                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. - By Lisland Management Team.";
+
+                $url = 'https://www.itexmo.com/php_api/api.php';
+                $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
+                $param = array(
+                    'http' => array(
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method'  => 'POST',
+                        'content' => http_build_query($itexmo),
+                    ),
+                );
+                $context  = stream_context_create($param);
+                file_get_contents($url, false, $context);
             }
 
             Book::whereId($id)

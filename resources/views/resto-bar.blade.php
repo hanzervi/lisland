@@ -43,7 +43,7 @@
                                 <td><img src="{{ asset('public/storage/fooddrink') . '/' . $item->image }}" class="img rounded" width="200px" height="auto"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->price }}</td>
+                                <td>{{ number_format($item->price, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -69,7 +69,7 @@
                                 <td><img src="{{ asset('public/storage/fooddrink') . '/' . $item->image }}" class="img rounded" width="200px" height="auto"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->price }}</td>
+                                <td>{{ number_format($item->price, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -95,7 +95,7 @@
                                 <td><img src="{{ asset('public/storage/fooddrink') . '/' . $item->image }}" class="img rounded" width="200px" height="auto"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->price }}</td>
+                                <td>{{ number_format($item->price, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -120,7 +120,7 @@
                                 <td><img src="{{ asset('public/storage/fooddrink') . '/' . $item->image }}" class="img rounded" width="200px" height="auto"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->price }}</td>
+                                <td>{{ number_format($item->price, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -146,7 +146,7 @@
                                 <td><img src="{{ asset('public/storage/fooddrink') . '/' . $item->image }}" class="img rounded" width="200px" height="auto"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->price }}</td>
+                                <td>{{ number_format($item->price, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -172,7 +172,7 @@
                                 <td><img src="{{ asset('public/storage/fooddrink') . '/' . $item->image }}" class="img rounded" width="200px" height="auto"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->price }}</td>
+                                <td>{{ number_format($item->price, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
