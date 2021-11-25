@@ -21,6 +21,7 @@
                 <table id="tb" class="table table-bordered table-striped" width="100%">
                     <thead>
                         <tr>
+                            <th>Ref #</th>
                             <th>Room</th>
                             <th>Customer</th>
                             <th>Pax</th>
@@ -58,6 +59,9 @@
                 dataSrc: ""
             },
             columns: [
+                {
+                    data: 'ref'
+                },
                 {
                     data: 'room'
                 },

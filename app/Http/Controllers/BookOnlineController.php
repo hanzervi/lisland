@@ -31,7 +31,7 @@ class BookOnlineController extends Controller
         if ($request->ajax()) {
             $data = DB::table('books')
                         ->selectRaw('
-                            books.id, rooms.name as room,
+                            DATE_FORMAT(books.created_at, "%y%m%d%H%i") as ref, books.id, rooms.name as room,
                             CONCAT(customers.firstname, " ", customers.lastname) as customer,
                             books.adults, books.children, books.infants, books.add_person,
                             books.check_in, books.check_out, books.priceTotal, books.status, books.remarks
