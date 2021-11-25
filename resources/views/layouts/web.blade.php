@@ -381,7 +381,11 @@
                 mm = '0' + mm;
             }
 
-            today = yyyy + '-' + mm + '-' + dd;
+            if (today.getHours() >= 14) 
+                today = yyyy + '-' + mm + '-' + (dd+1);
+            else
+                today = yyyy + '-' + mm + '-' + dd;
+
             $('input[type="date"]').attr('min', today);
 
         });
