@@ -437,10 +437,38 @@
                     $('#bookStatus').hide();
                     $('#bookStatus').html(
                         '<div class="alert mt-1 alert-success" role="alert">'+
-                          'Success! Your book has now been pending. Please pay thru Gcash QR Code.<br><hr>'+
-                          '<div class="text-center">'+
-                            '<img src="{{ asset('public/assets/img/qr.png') }}" width="200px" height="auto" class="img">'+
-                          '</div>'+
+                            'Success! Your book has now been pending. Please pay in any payment options.<br><hr>'+
+                            '<div class="row">'+
+                                '<div class="col-lg-4">'+
+                                    '<h5>Gcash</h5>'+
+                                    '<img src="{{ asset('public/assets/img/qr.png') }}" width="200px" height="auto" class="img">'+
+                                '</div>'+
+                                '<div class="col-lg-4">'+
+                                    '<h5>Bank</h5>'+
+                                    '<label>BDO</label>'+
+                                    '<p style="margin-left: 15px;">'+
+                                        'Acc Name: John Doe'+
+                                        'Acc No. 04-6598745-03'+
+                                    '</p>'+
+                                    '<label>BPI</label>'+
+                                    '<p style="margin-left: 15px;">'+
+                                        'Acc Name: John Doe'+
+                                        'Acc No. 05-6987452-01'+
+                                    '</p>'+
+                                '</div>'+
+                                '<div class="col-lg-4">'+
+                                    '<h5>Remittance</h5>'+
+                                    '<label>Western Union</label><br>'+
+                                    '<label>Palawan Express</label><br>'+
+                                    '<label>Cebuana Lhuillier</label>'+
+                                    '<br>'+
+                                    '<br>'+
+                                    '<p style="margin-left: 15px;">'+
+                                        'Name: John Doe'+
+                                        'Contact. 09265648521'+
+                                    '</p>'+
+                                '</div>'+
+                            '</div>'+
                         '</div>'
                     );
                     $('#bookStatus').fadeIn();
