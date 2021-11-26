@@ -113,7 +113,7 @@ class BookOnsiteController extends Controller
         if ($totalActive < $totalRoom->no_rooms)
             return response()->json(['status' => 'available', 'price' => $priceTotal]);
         else {
-            $check = Book::whereRaw('room_id = '.$request->room_id.' and (check_in <= "'.$request->check_in.'" and check_out >= "'.$request->check_in.'") and (status != -1 or status != 3)')
+            $check = Book::whereRaw('room_id = '.$request->room_id.' and (check_in <= "'.$request->check_in.'" and check_out > "'.$request->check_in.'") and (status != -1 or status != 3)')
                     ->count();
 
             if ($check < $totalRoom->no_rooms)
