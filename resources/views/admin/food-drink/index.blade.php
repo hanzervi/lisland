@@ -107,7 +107,7 @@
                 {
                     data: 'id',
                     render: function (data, type, row) {
-                        if ("{{ Auth::id() }}" === 1) {
+                        if ("{{ Auth::id() }}" == 1) {
                             return '<div class="btn-group float-right">' +
                                     '<a href="javascript:void(0)" type="button" class="btn btn-primary" onclick="update('+data+')"><i class="fas fa-edit"></i></a>' +
                                     '<a href="javascript:void(0)" type="button" class="btn btn-danger" onclick="remove('+data+')"><i class="fas fa-trash"></i></a>' +
