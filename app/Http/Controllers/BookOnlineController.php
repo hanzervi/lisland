@@ -81,11 +81,22 @@ class BookOnlineController extends Controller
     public function updateStatus($id, $status) {
         try {
             
-            $cid = Book::find($id);
-            $customer = Customer::find($cid->customer_id);
+            $book = Book::find($id);
+            $customer = Customer::find($book->customer_id);
+            $room = Room::find($book->room_id);
 
             if ($status == 1) {
-                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> Your reservation book status is now <b>RESERVED</b>. <br><br><br> - Lisland Management Team";
+                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> 
+                            Reference: <b>".date_format(date_create($book->created_at), 'ymdHi')."</b> <br><br>
+
+                            Your reservation book status is now <b>RESERVED</b>. <br><br>
+
+                            Room: <b> ".$room->name."</b> <br>
+                            Check-in Date: <b>".date_format(date_create($book->check_in), 'M d, Y')."</b> <br>
+                            Check-out Date: <b>".date_format(date_create($book->check_out), 'M d, Y')."</b> <br>
+                            Total Price: <b>".number_format($book->priceTotal, 2)."</b>
+                            
+                            <br><br><br> - Lisland Management Team";
 
                 $mail               = new PHPMailer\PHPMailer();
                 
@@ -112,7 +123,7 @@ class BookOnlineController extends Controller
                 $apicode = "TR-MARCO126898_4LJBY";
                 $passwd = ")cjry36gf4";
                 $number = $customer->contact_no;
-                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. - By Lisland Management Team.";
+                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. Please check your mail for additional info. - By Lisland Management Team.";
 
                 $url = 'https://www.itexmo.com/php_api/api.php';
                 $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
@@ -127,7 +138,17 @@ class BookOnlineController extends Controller
                 file_get_contents($url, false, $context);
             }
             else if ($status == -1) {
-                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> Your reservation book status has been <b>CANCELLED</b>. <br><br><br> - Lisland Management Team";
+                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> 
+                            Reference: <b>".date_format(date_create($book->created_at), 'ymdHi')."</b> <br><br>
+
+                            Your reservation book status has been <b>CANCELLED</b>. <br><br>
+
+                            Room: <b> ".$room->name."</b> <br>
+                            Check-in Date: <b>".date_format(date_create($book->check_in), 'M d, Y')."</b> <br>
+                            Check-out Date: <b>".date_format(date_create($book->check_out), 'M d, Y')."</b> <br>
+                            Total Price: <b>".number_format($book->priceTotal, 2)."</b>
+                            
+                            <br><br><br> - Lisland Management Team";
 
                 $mail               = new PHPMailer\PHPMailer();
                 
@@ -154,7 +175,7 @@ class BookOnlineController extends Controller
                 $apicode = "TR-MARCO126898_4LJBY";
                 $passwd = ")cjry36gf4";
                 $number = $customer->contact_no;
-                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. - By Lisland Management Team.";
+                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. Please check your mail for additional info. - By Lisland Management Team.";
 
                 $url = 'https://www.itexmo.com/php_api/api.php';
                 $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
