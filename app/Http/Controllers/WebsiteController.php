@@ -21,6 +21,10 @@ class WebsiteController extends Controller
     }
 
     public function index() {
+/*         if (date('H', strtotime(now())) >= 18) {
+            
+        } */
+
         $room = Room::where('status', '!=', -1)
                     ->orderBy('price_wd', 'desc')
                     ->get();
