@@ -123,7 +123,7 @@ class BookOnlineController extends Controller
                 $apicode = "TR-MARCO126898_4LJBY";
                 $passwd = ")cjry36gf4";
                 $number = $customer->contact_no;
-                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. Please check your mail for additional info. - By Lisland Management Team.";
+                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. - By Lisland Management Team.";
 
                 $url = 'https://www.itexmo.com/php_api/api.php';
                 $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
@@ -175,7 +175,7 @@ class BookOnlineController extends Controller
                 $apicode = "TR-MARCO126898_4LJBY";
                 $passwd = ")cjry36gf4";
                 $number = $customer->contact_no;
-                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. Please check your mail for additional info. - By Lisland Management Team.";
+                $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. - By Lisland Management Team.";
 
                 $url = 'https://www.itexmo.com/php_api/api.php';
                 $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
