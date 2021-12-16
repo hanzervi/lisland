@@ -14,7 +14,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-history"></i></span>
 
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group"></i></span>
 
@@ -36,13 +36,24 @@
             </div>
             <div class="clearfix hidden-md-up"></div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Checked In</span>
                         <span class="info-box-number">{{ $data['checkedin'] }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-light elevation-1"><i class="fas fa-users"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Number of Guest/s</span>
+                        <span class="info-box-number">{{ $data['number'] }}</span>
                     </div>
                 </div>
             </div>

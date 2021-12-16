@@ -285,4 +285,28 @@ class WebsiteController extends Controller
             return $e->getMessage();
         }
     }
+
+    public function threeD() {
+        $room = Room::where('status', '!=', -1)
+                    ->orderBy('price_wd', 'desc')
+                    ->get();
+
+        $data = [
+            'room' => $room
+        ];
+
+        return view('3d', ['data' => $data]);
+    }
+
+    public function inOut() {
+        $data = DB::table('guests')->select('number')->first();
+
+        return view('in-out', ['number' => $data->number]);
+    }
+
+    public function inOut_update($number) {
+        return DB::table('guests')->update([
+            'number' => $number
+        ]);
+    }
 }

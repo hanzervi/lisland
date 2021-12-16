@@ -11,6 +11,15 @@
 |
 */
 
+/* IN AND OUT ----------------------------------------------------------------- */
+
+Route::get('/in-out', 'WebsiteController@inOut');
+Route::get('/3d-rooms', 'WebsiteController@threeD');
+
+Route::post('/in-out/update/{number}', 'WebsiteController@inOut_update');
+
+/* WEB ------------------------------------------------------------------------ */
+
 Route::get('/', 'WebsiteController@index');
 Route::get('/resto-bar/view/', 'WebsiteController@restoBarView');
 Route::get('/packages/view/', 'WebsiteController@packagesView');

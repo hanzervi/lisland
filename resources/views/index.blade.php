@@ -101,6 +101,7 @@
             <div class="title-wrap d-flex justify-content-between">
               <div class="title-box">
                 <h2 class="title-a">Our Rooms</h2>
+                <a href="{{ url('/3d-rooms') }}">View 3D Rooms <span class="bi bi-chevron-right"></span></a>
               </div>
             </div>
           </div>
