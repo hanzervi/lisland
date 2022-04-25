@@ -138,6 +138,12 @@
                                 <p>Food & Drink</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/in-and-out') }}" class="nav-link {{ Request::is('admin/in-and-out') || Request::is('admin/in-and-out/*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-door-open"></i>
+                                <p>In & Out</p>
+                            </a>
+                        </li>
                         @if (Auth::id() == 1)
                             <li class="nav-item">
                                 <a href="{{ url('/admin/users') }}" class="nav-link {{ Request::is('admin/users') || Request::is('admin/users/*') ? 'active' : '' }}">
@@ -219,7 +225,7 @@
             else
                 today = yyyy + '-' + mm + '-' + dd;
 
-            $('input[type="date"]').attr('min', today);
+            $('.dateMin').attr('min', today);
 
 
             countPending();

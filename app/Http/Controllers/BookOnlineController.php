@@ -34,7 +34,8 @@ class BookOnlineController extends Controller
                             DATE_FORMAT(books.created_at, "%y%m%d%H%i") as ref, books.id, rooms.name as room,
                             CONCAT(customers.firstname, " ", customers.lastname) as customer,
                             books.adults, books.children, books.infants, books.add_person,
-                            books.check_in, books.check_out, books.priceTotal, books.status, books.remarks
+                            books.check_in, books.check_out, books.priceTotal, books.status, books.remarks,
+                            books.payment, books.payment_ref
                         ')
                         ->join('rooms', 'rooms.id', '=', 'books.room_id')
                         ->join('customers', 'customers.id', '=', 'books.customer_id')
@@ -59,7 +60,7 @@ class BookOnlineController extends Controller
                             books.id, rooms.name as room,
                             books.adults, books.children, books.infants, books.add_person, books.check_in, books.check_out,
                             customers.firstname, customers.lastname, customers.address, customers.sex, customers.contact_no, customers.email,
-                            books.remarks
+                            books.remarks, books.payment, books.payment_ref
                         ')
                         ->join('rooms', 'rooms.id', '=', 'books.room_id')
                         ->join('customers', 'customers.id', '=', 'books.customer_id')
@@ -86,16 +87,23 @@ class BookOnlineController extends Controller
             $room = Room::find($book->room_id);
 
             if ($status == 1) {
-                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> 
+                $body = "Dear Sir/Madam ".$customer->lastname.", <br>
+                            Good Day! <br><br>
+
                             Reference: <b>".date_format(date_create($book->created_at), 'ymdHi')."</b> <br><br>
 
-                            Your reservation book status is now <b>RESERVED</b>. <br><br>
+                            <div style='color: green;'>YOUR RESERVATION BOOK STATUS IS NOW <b>RESERVED</b>.</div> <br><br>
 
+                            The following are the details of your booking: <br>
+                            <hr>
+                            Paid Thru: <b> ".$book->payment."</b> <br>
+                            Payment Ref #: <b> ".$book->payment_ref."</b> <br>
                             Room: <b> ".$room->name."</b> <br>
                             Check-in Date: <b>".date_format(date_create($book->check_in), 'M d, Y')."</b> <br>
                             Check-out Date: <b>".date_format(date_create($book->check_out), 'M d, Y')."</b> <br>
                             Total Price: <b>".number_format($book->priceTotal, 2)."</b>
-                            
+                            <hr>
+
                             <br><br><br> - Lisland Management Team";
 
                 $mail               = new PHPMailer\PHPMailer();
@@ -104,12 +112,12 @@ class BookOnlineController extends Controller
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'lislandresortph@gmail.com';
-                $mail->Password = 'mjbalangue611';
+                $mail->Username = 'pccartel.computers@gmail.com';
+                $mail->Password = 'admincartel';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->SetFrom("lislandresortph@gmail.com", "Lisland Management Team");
+                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
 
                 $mail->addAddress($customer->email);
 
@@ -120,8 +128,8 @@ class BookOnlineController extends Controller
 
                 /* sms ----------------- */
 
-                $apicode = "TR-MARCO126898_4LJBY";
-                $passwd = ")cjry36gf4";
+                $apicode = "TR-MARCO937024_2B18Y";
+                $passwd = 'b$ti@$u(a3';
                 $number = $customer->contact_no;
                 $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. - By Lisland Management Team.";
 
@@ -138,16 +146,23 @@ class BookOnlineController extends Controller
                 file_get_contents($url, false, $context);
             }
             else if ($status == -1) {
-                $body = "Dear Sir/Madam ".$customer->lastname.", <br><br> 
+                $body = "Dear Sir/Madam ".$customer->lastname.", <br>
+                            Good Day! <br><br>
+
                             Reference: <b>".date_format(date_create($book->created_at), 'ymdHi')."</b> <br><br>
 
-                            Your reservation book status has been <b>CANCELLED</b>. <br><br>
+                            <div style='color: red;'>YOUR RESERVATION BOOK STATUS HAS BEEN <b>CANCELLED</b>.</div> <br><br>
 
+                            The following are the details of your booking: <br>
+                            <hr>
+                            Paid Thru: <b> ".$book->payment."</b> <br>
+                            Payment Ref #: <b> ".$book->payment_ref."</b> <br>
                             Room: <b> ".$room->name."</b> <br>
                             Check-in Date: <b>".date_format(date_create($book->check_in), 'M d, Y')."</b> <br>
                             Check-out Date: <b>".date_format(date_create($book->check_out), 'M d, Y')."</b> <br>
                             Total Price: <b>".number_format($book->priceTotal, 2)."</b>
-                            
+                            <hr>
+
                             <br><br><br> - Lisland Management Team";
 
                 $mail               = new PHPMailer\PHPMailer();
@@ -156,12 +171,19 @@ class BookOnlineController extends Controller
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'lislandresortph@gmail.com';
+                $mail->Username = 'pccartel.computers@gmail.com';
+                $mail->Password = 'admincartel';
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+
+                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
+
+                /* $mail->Username = 'lislandresortph@gmail.com';
                 $mail->Password = 'mjbalangue611';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->SetFrom("lislandresortph@gmail.com", "Lisland Management Team");
+                $mail->SetFrom("lislandresortph@gmail.com", "Lisland Management Team"); */
 
                 $mail->addAddress($customer->email);
 
@@ -172,8 +194,8 @@ class BookOnlineController extends Controller
 
                 /* sms ----------------- */
 
-                $apicode = "TR-MARCO126898_4LJBY";
-                $passwd = ")cjry36gf4";
+                $apicode = "TR-MARCO937024_2B18Y";
+                $passwd = 'b$ti@$u(a3';
                 $number = $customer->contact_no;
                 $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. - By Lisland Management Team.";
 
@@ -213,7 +235,9 @@ class BookOnlineController extends Controller
                     'infants' => $request->update_infants,
                     'add_person' => $request->update_add_person,
                     'priceTotal' => $book->priceTotal + ($add * 750),
-                    'remarks' => $request->update_remarks
+                    'remarks' => $request->update_remarks,
+                    'payment' => $request->update_payment,
+                    'payment_ref' => $request->update_payment_ref
                 ]);
 
             return 'success';

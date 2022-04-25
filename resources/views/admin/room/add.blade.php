@@ -91,9 +91,9 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>360 Image </label>
+                                        <label>360 Image <span class="text-danger">*</span></label>
                                         <br>
-                                        <input type="file" name="image360" accept="image/png, image/jpeg">
+                                        <input type="file" name="image360" accept="image/png, image/jpeg" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

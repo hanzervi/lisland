@@ -52,13 +52,13 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Check In Date <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="check_in" onchange="btnCheckChange()" required>
+                                <input type="date" class="form-control dateMin" name="check_in" onchange="btnCheckChange()" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Check Out Date <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" name="check_out" onchange="btnCheckChange()" required>
+                                <input type="date" class="form-control dateMin" name="check_out" onchange="btnCheckChange()" required>
                             </div>
                         </div>
                         <div class="col-lg-12">

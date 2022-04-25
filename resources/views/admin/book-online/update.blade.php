@@ -41,6 +41,18 @@
                                 <input type="text" class="form-control" name="update_remarks">
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Paid Thru</label>
+                                <input type="text" class="form-control" name="update_payment">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Payment Ref #</label>
+                                <input type="text" class="form-control" name="update_payment_ref">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">

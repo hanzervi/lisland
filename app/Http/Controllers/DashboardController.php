@@ -142,7 +142,7 @@ class DashboardController extends Controller
                         ->whereMonth('created_at', '12')
                         ->count();
 
-        $number = DB::table('guests')->select('number')->first();
+        $number = DB::table('guests')->where('status', '=', 1)->count();
 
         foreach($book as $item) {
                 $item->pax = $item->adults + ($item->children = null ? 0 : $item->children) + ($item->infants = null ? 0 : $item->infants) + ($item->add_person = null ? 0 : $item->add_person);
@@ -157,7 +157,7 @@ class DashboardController extends Controller
             'lastYear' => $lastYear,
             'tyMonth' => $tyMonth,
             'lyMonth' => $lyMonth,
-            'number' => $number->number
+            'number' => $number
         ];
 
         return view('admin.dashboard.index', ['data' => $data]);

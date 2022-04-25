@@ -13,10 +13,10 @@
 
 /* IN AND OUT ----------------------------------------------------------------- */
 
-Route::get('/in-out', 'WebsiteController@inOut');
+/* Route::get('/in-out', 'WebsiteController@inOut'); */
 Route::get('/3d-rooms', 'WebsiteController@threeD');
 
-Route::post('/in-out/update/{number}', 'WebsiteController@inOut_update');
+/* Route::post('/in-out/update/{number}', 'WebsiteController@inOut_update'); */
 
 /* WEB ------------------------------------------------------------------------ */
 
@@ -96,6 +96,11 @@ Route::post('/admin/food-and-drink/bin/removeP/{id}', 'FoodDrinkController@remov
 Route::post('/admin/food-and-drink/add', 'FoodDrinkController@add');
 Route::post('/admin/food-and-drink/update', 'FoodDrinkController@update');
 Route::post('/admin/food-and-drink/remove/{id}', 'FoodDrinkController@remove');
+
+Route::get('/admin/in-and-out/', 'InOutController@index');
+Route::get('/admin/in-and-out/table', 'InOutController@table');
+Route::post('/admin/in-and-out/add', 'InOutController@add');
+Route::post('/admin/in-and-out/out/{id}', 'InOutController@out');
 
 Route::get('/admin/users/', 'UserController@index');
 Route::get('/admin/users/table', 'UserController@table');

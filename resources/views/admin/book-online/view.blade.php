@@ -109,6 +109,20 @@
                             <hr>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Paid Thru</label>
+                            <p name="view_paidThru"></p>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Payment Ref #</label>
+                            <p name="view_paymentRef"></p>
+                            <hr>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-between">

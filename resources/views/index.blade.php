@@ -15,9 +15,23 @@
                 with hot and cold showers, TV and WIFI.</p>
             </div>
           </div>
+          <div class="gmap_canvas">
+            <iframe width="100%" height="400px"
+                src="https://maps.google.com/maps?q=Lisland%20Rainforest%20Resort&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+            </iframe>
+            <style>
+                .gmap_canvas {
+                    overflow: hidden;
+                    background: none !important;
+                    height: 400px;
+                    width: 100%;
+                }
+            </style>
+          </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-5">
         <div class="col-md-4">
           <div class="card-box-c foo">
             <div class="card-header-c d-flex">

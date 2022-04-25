@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin',
-            'username' => '123',
-            'password' => '$2a$12$N4Vu9EhyKJxQW.jkvVz8Metk/1dPYcQCT4z/wkgk2xGeK/2tfkeo.',
+            'username' => 'admin',
+            'password' => '$2a$10$lGHmB7ID8.hGlc7c/9Pg0.O7t/i3w.P8vrf0XKmb03F42mfx/bdSK',
             'status' => 1,
             'created_by' => 1
         ]);

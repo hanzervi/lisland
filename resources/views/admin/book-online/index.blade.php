@@ -165,6 +165,8 @@
                     $('[name=update_infants]').val(item.infants == null ? 0 : item.infants);
                     $('[name=update_add_person]').val(item.add_person == null ? 0 : item.add_person);
                     $('[name=update_remarks]').val(item.remarks);
+                    $('[name=update_payment]').val(item.payment);
+                    $('[name=update_payment_ref]').val(item.payment_ref);
                 });
             }
         });
@@ -435,6 +437,8 @@
                     $('[name=view_contact_no]').html(item.contact_no);
                     $('[name=view_email]').html(item.email == null ? '--' : item.email);
                     $('[name=view_remarks]').html(item.remarks == null ? '--' : item.remarks);
+                    $('[name=view_paidThru]').html(item.payment == null ? '--' : item.payment);
+                    $('[name=view_paymentRef]').html(item.payment_ref == null ? '--' : item.payment_ref);
                 });
             }
         });
