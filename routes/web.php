@@ -55,6 +55,7 @@ Route::get('/admin/booking/onsite/table', 'BookOnsiteController@table');
 Route::get('/admin/booking/onsite/get/{id}', 'BookOnsiteController@get');
 Route::get('/admin/booking/onsite/status/{id}/{status}', 'BookOnsiteController@updateStatus');
 Route::post('/admin/booking/onsite/check-room-capacity', 'BookOnsiteController@checkRoomCapacity');
+Route::post('/admin/booking/onsite/check-booked', 'BookOnsiteController@checkBooked');
 Route::post('/admin/booking/onsite/check-room', 'BookOnsiteController@checkRoom');
 Route::post('/admin/booking/onsite/add', 'BookOnsiteController@add');
 Route::post('/admin/booking/onsite/remarks-update', 'BookOnsiteController@remarksUpdate');

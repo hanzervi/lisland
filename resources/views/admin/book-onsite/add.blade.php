@@ -10,7 +10,7 @@
             <form action="javascript:void(0)" method="POST" id="addForm">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Room <span class="text-danger">*</span></label>
                                 <select class="form-control select2" name="room_id" required onchange="btnCheckChange()">
@@ -24,6 +24,10 @@
                                     @endif
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Available Rooms</label>
+                            <input type="text" class="form-control" value="--" id="available" readonly>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">

@@ -15,13 +15,25 @@ class BookOnsiteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'checkRoomCapacity']);
+        $this->middleware('auth', ['except' => ['checkRoomCapacity', 'checkBooked']]);
     }
 
     public function index() {
         $room = Room::where('status', '!=', '-1')
                     ->get();
 
+        foreach($room as $item) {
+            if (Book::where('room_id', '=', $item->id)->count() == 0) {
+                $booked = 0;
+            }
+            else {
+                $booked = Book::whereRaw('room_id = '.$item->id.' and (status = 0 or status = 1 or status = 2)')
+                                    ->count();
+            }
+
+            $item->available = $item->no_rooms - $booked;
+        }
+        
         return view('admin.book-onsite.index', ['room' => $room]);
     }
 
@@ -68,6 +80,21 @@ class BookOnsiteController extends Controller
         }
         
         return response()->json(['error' => 'Unauthorized.'], 401);
+    }
+
+    public function checkBooked(Request $request) {
+        $booked = 0;
+        if (Book::where('room_id', '=', $request->room_id)->count() == 0) {
+            $booked = 0;
+        }
+        else {
+            $booked = Book::whereRaw('room_id = '.$request->room_id.' and (status = 0 or status = 1 or status = 2)')
+                                ->count();
+        }
+
+        return Room::select('no_rooms')
+                        ->whereId($request->room_id)
+                        ->first()->no_rooms - $booked;
     }
 
     public function checkRoomCapacity(Request $request) {

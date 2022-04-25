@@ -45,7 +45,7 @@
         <div class="box-collapse-wrap form">
             <form class="form-a" method="post" action="javascript:void(0)" id="bookForm">
                 <div class="row">
-                    <div class="col-md-12 mb-2">
+                    <div class="col-md-6 mb-2">
                         <div class="form-group">
                             <label class="pb-2" for="room">Room Type <span class="text-danger">*</span></label>
                             <select class="form-control form-select form-control-a" name="room_id"
@@ -58,6 +58,10 @@
                                 @endif
                             </select>
                         </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label class="pb-2">Avaialble Rooms</label>
+                        <input type="text" class="form-control" id="available" value="--" readonly>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="form-group mt-3">
@@ -409,6 +413,17 @@
             });
 
             $('#btnCheck').prop('disabled', true);
+
+            $.ajax({
+                url: '{{ url("/admin/booking/onsite/check-booked") }}',
+                method: 'post',
+                data: {
+                    'room_id': $(this).val(),
+                },
+                success: function (result) {
+                    $('#available').val(result);
+                }
+            });
         });
 
         function btnCheckChange() {

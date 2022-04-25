@@ -170,6 +170,17 @@
                 $('[name=infants]').attr('max', result.infants == null ? 0 : result.infants);
             }
         });
+
+        $.ajax({
+            url: '{{ url("/admin/booking/onsite/check-booked") }}',
+            method: 'post',
+            data: {
+                'room_id': $(this).val(),
+            },
+            success: function (result) {
+                $('#available').val(result);
+            }
+        });
     });
 
     function btnCheckChange() {
