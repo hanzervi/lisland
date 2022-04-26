@@ -17,7 +17,12 @@ class PoolController extends Controller
     }
 
     public function index() {
-        return view('admin.pool.index');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.pool.index');
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {
@@ -126,10 +131,16 @@ class PoolController extends Controller
     }
 
     public function bin() {
-        if (Auth::id() == 1) {
-            return view('admin.pool.bin');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null) {
+                if (Auth::id() == 1) {
+                    return view('admin.pool.bin');
+                }
+                return response()->json(['error' => 'Unauthorized.'], 401);
+            }
+            else
+                return redirect('/');
         }
-        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     public function binTable(Request $request) {
@@ -173,6 +184,11 @@ class PoolController extends Controller
     function image360($id) {
         $image360 = Pool::whereId($id)->first();
 
-        return view('admin.pool.image360', ['data' => $image360->image360]);
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.pool.image360', ['data' => $image360->image360]);
+            else
+                return redirect('/');
+        }
     }
 }

@@ -33,8 +33,13 @@ class BookOnsiteController extends Controller
 
             $item->available = $item->no_rooms - $booked;
         }
-        
-        return view('admin.book-onsite.index', ['room' => $room]);
+
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.book-onsite.index', ['room' => $room]);
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {

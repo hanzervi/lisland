@@ -24,7 +24,12 @@ class BookOnlineController extends Controller
         $room = Room::where('status', '!=', '-1')
                     ->get();
 
-        return view('admin.book-online.index', ['room' => $room]);
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.book-online.index', ['room' => $room]);
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {

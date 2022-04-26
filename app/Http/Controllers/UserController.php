@@ -20,16 +20,23 @@ class UserController extends Controller
     }
 
     public function index() {
-        if (Auth::id() == 1) {
-            return view('admin.users.index');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null) {
+                if (Auth::id() == 1) {
+                    return view('admin.users.index');
+                }
+                return response()->json(['error' => 'Unauthorized.'], 401);
+            }
+            else
+                return redirect('/');
         }
-        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     public function table(Request $request) {
         if ($request->ajax()) {
             return User::where('status', '!=', '-1')
                     ->where('id', '!=', '1')
+                    ->where('booker_id', '=', null)
                     ->get();
         }
         return response()->json(['error' => 'Unauthorized.'], 401);
@@ -235,13 +242,23 @@ class UserController extends Controller
     }
 
     public function bin() {
-        return view('admin.users.bin');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null) {
+                if (Auth::id() == 1) {
+                    return view('admin.users.bin');
+                }
+                return response()->json(['error' => 'Unauthorized.'], 401);
+            }
+            else
+                return redirect('/');
+        }
     }
 
     public function binTable(Request $request) {
         if ($request->ajax()) {
             return User::where('status', '=', '-1')
                     ->where('id', '!=', '1')
+                    ->where('booker_id', '=', null)
                     ->get();
         }
         return response()->json(['error' => 'Unauthorized.'], 401);

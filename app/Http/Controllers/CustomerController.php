@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+
 use App\Customer;
 
 class CustomerController extends Controller
@@ -14,7 +16,12 @@ class CustomerController extends Controller
     }
 
     public function index() {
-        return view('admin.customer.index');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.customer.index');
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {

@@ -25,7 +25,12 @@ class FoodDrinkController extends Controller
             'Drinks'
         ];
         
-        return view('admin.food-drink.index', ['category' => $category]);
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.food-drink.index', ['category' => $category]);
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {
@@ -114,10 +119,16 @@ class FoodDrinkController extends Controller
     }
 
     public function bin() {
-        if (Auth::id() == 1) {
-            return view('admin.food-drink.bin');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null) {
+                if (Auth::id() == 1) {
+                    return view('admin.food-drink.bin');
+                }
+                return response()->json(['error' => 'Unauthorized.'], 401);
+            }
+            else
+                return redirect('/');
         }
-        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     public function binTable(Request $request) {

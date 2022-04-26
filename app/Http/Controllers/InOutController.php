@@ -27,7 +27,12 @@ class InOutController extends Controller
             'senior' => $senior
         ];
 
-        return view('admin.in-and-out.index', ['data' => $data]);
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.in-and-out.index', ['data' => $data]);
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use Auth;
 
 use App\Book;
 
@@ -160,6 +161,11 @@ class DashboardController extends Controller
             'number' => $number
         ];
 
-        return view('admin.dashboard.index', ['data' => $data]);
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.dashboard.index', ['data' => $data]);
+            else
+                return redirect('/');
+        }
     }
 }

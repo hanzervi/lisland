@@ -17,7 +17,12 @@ class RoomController extends Controller
     }
 
     public function index() {
-        return view('admin.room.index');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.room.index');
+            else
+                return redirect('/');
+        }
     }
 
     public function table(Request $request) {
@@ -150,10 +155,16 @@ class RoomController extends Controller
     }
 
     public function bin() {
-        if (Auth::id() == 1) {
-            return view('admin.room.bin');
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null) {
+                if (Auth::id() == 1) {
+                    return view('admin.room.bin');
+                }
+                return response()->json(['error' => 'Unauthorized.'], 401);
+            }
+            else
+                return redirect('/');
         }
-        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     public function binTable(Request $request) {
@@ -186,7 +197,12 @@ class RoomController extends Controller
 
     function image360($id) {
         $image360 = Room::whereId($id)->first();
-
-        return view('admin.room.image360', ['data' => $image360->image360]);
+        
+        if (Auth::check()) {
+            if (Auth::user()->booker_id == null)
+                return view('admin.room.image360', ['data' => $image360->image360]);
+            else
+                return redirect('/');
+        }
     }
 }
