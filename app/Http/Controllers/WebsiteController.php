@@ -12,6 +12,7 @@ use App\Room;
 use App\Pool;
 use App\Book;
 use App\Customer;
+use App\Booker;
 
 class WebsiteController extends Controller
 {
@@ -303,14 +304,15 @@ class WebsiteController extends Controller
                         $priceTotal += $roomInfo->price_wd;
                 }
 
+                $booker = Booker::find(Auth::user()->booker_id);
                 $customer = Customer::create([
-                    'firstname' => $request->firstname,
-                    'lastname' => $request->lastname,
-                    'address' => $request->address,
-                    'sex' => $request->sex,
-                    'contact_no' => $request->contact_no,
-                    'email' => $request->email,
-                    'created_by' => 1
+                    'firstname' => $booker->first_name,
+                    'lastname' => $booker->last_name,
+                    'address' => $booker->address,
+                    'sex' => $booker->sex,
+                    'contact_no' => $booker->contact,
+                    'email' => $booker->email,
+                    'created_by' => Auth::user()->id
                 ]);
 
                 Book::create([
@@ -326,7 +328,7 @@ class WebsiteController extends Controller
                     'priceTotal' => $priceTotal,
                     'status' => 0,
                     'remarks' => null,
-                    'created_by' => 1
+                    'created_by' => Auth::user()->id
                 ]);
             }
 

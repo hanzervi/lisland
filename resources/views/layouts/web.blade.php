@@ -109,46 +109,6 @@
                             </div>
                         </div>
                         {{--  --}}
-                        <div class="col-lg-6">
-                            <div class="form-group mt-3">
-                                <label class="pb-2">First Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="firstname" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group mt-3">
-                                <label class="pb-2">Last Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="lastname" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group mt-3">
-                                <label class="pb-2">Address <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="address" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group mt-3">
-                                <label class="pb-2">Sex <span class="text-danger">*</span></label>
-                                <select class="form-control form-select form-control-a" name="sex" required>
-                                    <option value="" selected disabled></option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group mt-3">
-                                <label class="pb-2">Contact <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="contact_no" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group mt-3">
-                                <label class="pb-2">Email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" name="email" required>
-                            </div>
-                        </div>
                         <div class="col-md-12">
                             <div class="form-group mt-3">
                                 <button type="submit" class="btn btn-b">Book Now</button>
@@ -225,7 +185,7 @@
                 <li class="nav-item dropdown" style="list-style-type: none; margin-left: 20px;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person"></i></a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item " href="property-single.html">Transactions</a>
+                        <a class="dropdown-item " href="#" data-toggle="modal" data-target="#transactions">Transactions</a>
                         <a class="dropdown-item " href="property-single.html">Credential</a>
                         <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -525,12 +485,12 @@
                                         '<h5>Bank</h5>'+
                                         '<label>BDO</label>'+
                                         '<p style="margin-left: 15px;">'+
-                                            'Acc Name: John Doe'+
+                                            'Acc Name: John Doe <br>'+
                                             'Acc No. 04-6598745-03'+
                                         '</p>'+
                                         '<label>BPI</label>'+
                                         '<p style="margin-left: 15px;">'+
-                                            'Acc Name: John Doe'+
+                                            'Acc Name: John Doe <br>'+
                                             'Acc No. 05-6987452-01'+
                                         '</p>'+
                                     '</div>'+
@@ -542,7 +502,7 @@
                                         '<br>'+
                                         '<br>'+
                                         '<p style="margin-left: 15px;">'+
-                                            'Name: John Doe'+
+                                            'Name: John Doe <br>'+
                                             'Contact. 09265648521'+
                                         '</p>'+
                                     '</div>'+
