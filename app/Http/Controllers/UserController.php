@@ -75,6 +75,7 @@ class UserController extends Controller
                             'first_name' => $request->first_name,
                             'last_name' => $request->last_name,
                             'address' => $request->address,
+                            'sex' => $request->sex,
                             'contact' => $request->contact,
                             'email' => $request->email
                         ]);

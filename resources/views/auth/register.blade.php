@@ -46,13 +46,23 @@
                                     <input type="text" class="form-control" name="address" required>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Sex <span class="text-danger">*</span></label>
+                                    <select class="form-control select2" name="sex" required>
+                                        <option value="" selected disabled></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Contact <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="contact" required>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" name="email" required>
