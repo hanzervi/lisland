@@ -227,7 +227,10 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item " href="property-single.html">Transactions</a>
                         <a class="dropdown-item " href="property-single.html">Credential</a>
-                        <a class="dropdown-item " href="blog-single.html">Sign Out</a>
+                        <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             @endauth

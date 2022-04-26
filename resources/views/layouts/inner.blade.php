@@ -50,123 +50,142 @@
     <span class="close-box-collapse right-boxed bi bi-x"
         onclick="$('#bookForm').trigger('reset'); $('#checkRoom').html(''); $('#btnCheck').prop('disabled', true);"></span>
     <div class="box-collapse-wrap form">
-        <form class="form-a" method="post" action="javascript:void(0)" id="bookForm">
-            <div class="row">
-                <div class="col-md-6 mb-2">
-                    <div class="form-group">
-                        <label class="pb-2" for="room">Room Type <span class="text-danger">*</span></label>
-                        <select class="form-control form-select form-control-a" name="room_id"
-                            onchange="btnCheckChange()" required>
-                            <option value="" selected disabled>Select Room</option>
-                            @if (count($data['room']) > 0)
-                            @foreach ($data['room'] as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                  <label class="pb-2">Avaialble Rooms</label>
-                  <input type="text" class="form-control" id="available" value="--" readonly>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Check In Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" placeholder="Check In Date" name="check_in"
-                            onchange="btnCheckChange()" required>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Check Out Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" placeholder="Check Out Date" name="check_out"
-                            onchange="btnCheckChange()" required>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-2">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Adults <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" min="1" value="0" step="1" name="adults"
-                            onchange="btnCheckChange()" placeholder="Adults">
-                    </div>
-                </div>
-                <div class="col-md-4 mb-2">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Children</label>
-                        <input type="number" class="form-control" min="0" value="0" step="1" name="children"
-                            onchange="btnCheckChange()" placeholder="Children">
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Infants</label>
-                        <input type="number" class="form-control" min="0" value="0" step="1" name="infants"
-                            onchange="btnCheckChange()" placeholder="Infant">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-b" id="btnCheck" onclick="checkRoom()" disabled>Check
-                        Availability</button>
-                </div>
-                <div class="col-lg-12 mt-3">
-                    <div id="checkRoom">
+        @auth
+            <form class="form-a" method="post" action="javascript:void(0)" id="bookForm">
+              <div class="row">
+                  <div class="col-md-6 mb-2">
+                      <div class="form-group">
+                          <label class="pb-2" for="room">Room Type <span class="text-danger">*</span></label>
+                          <select class="form-control form-select form-control-a" name="room_id"
+                              onchange="btnCheckChange()" required>
+                              <option value="" selected disabled>Select Room</option>
+                              @if (count($data['room']) > 0)
+                              @foreach ($data['room'] as $item)
+                              <option value="{{ $item->id }}">{{ $item->name }}</option>
+                              @endforeach
+                              @endif
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label class="pb-2">Avaialble Rooms</label>
+                    <input type="text" class="form-control" id="available" value="--" readonly>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Check In Date <span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" placeholder="Check In Date" name="check_in"
+                              onchange="btnCheckChange()" required>
+                      </div>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Check Out Date <span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" placeholder="Check Out Date" name="check_out"
+                              onchange="btnCheckChange()" required>
+                      </div>
+                  </div>
+                  <div class="col-md-4 mb-2">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Adults <span class="text-danger">*</span></label>
+                          <input type="number" class="form-control" min="1" value="0" step="1" name="adults"
+                              onchange="btnCheckChange()" placeholder="Adults">
+                      </div>
+                  </div>
+                  <div class="col-md-4 mb-2">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Children</label>
+                          <input type="number" class="form-control" min="0" value="0" step="1" name="children"
+                              onchange="btnCheckChange()" placeholder="Children">
+                      </div>
+                  </div>
+                  <div class="col-md-4 mb-4">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Infants</label>
+                          <input type="number" class="form-control" min="0" value="0" step="1" name="infants"
+                              onchange="btnCheckChange()" placeholder="Infant">
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <button type="button" class="btn btn-b" id="btnCheck" onclick="checkRoom()" disabled>Check
+                          Availability</button>
+                  </div>
+                  <div class="col-lg-12 mt-3">
+                      <div id="checkRoom">
 
-                    </div>
-                </div>
-                {{--  --}}
-                <div class="col-lg-6">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">First Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="firstname" required>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Last Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="lastname" required>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Address <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="address" required>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Sex <span class="text-danger">*</span></label>
-                        <select class="form-control form-select form-control-a" name="sex" required>
-                            <option value="" selected disabled></option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Contact <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="contact_no" required>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group mt-3">
-                        <label class="pb-2">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" name="email" required>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group mt-3">
-                        <button type="submit" class="btn btn-b">Book Now</button>
-                    </div>
-                </div>
-                <div class="col-lg-12 mt-3">
-                    <div id="bookStatus">
-                      
-                    </div>
-                </div>
-            </div>
-        </form>
+                      </div>
+                  </div>
+                  {{--  --}}
+                  <div class="col-lg-6">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">First Name <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="firstname" required>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Last Name <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="lastname" required>
+                      </div>
+                  </div>
+                  <div class="col-lg-12">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Address <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="address" required>
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Sex <span class="text-danger">*</span></label>
+                          <select class="form-control form-select form-control-a" name="sex" required>
+                              <option value="" selected disabled></option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Contact <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="contact_no" required>
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                      <div class="form-group mt-3">
+                          <label class="pb-2">Email <span class="text-danger">*</span></label>
+                          <input type="email" class="form-control" name="email" required>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group mt-3">
+                          <button type="submit" class="btn btn-b">Book Now</button>
+                      </div>
+                  </div>
+                  <div class="col-lg-12 mt-3">
+                      <div id="bookStatus">
+                        
+                      </div>
+                  </div>
+              </div>
+          </form>
+        @endauth
+
+        @guest
+          <div class="row mt-5 text-center">
+              <div class="col-lg-12 mb-5">
+                  <h4>You must sign in before booking</h4>
+              </div>
+              <div class="col-lg-12 mb-3">
+                  <a href="{{ url('login') }}" class="btn btn-b">Click here to sign in</a>
+              </div>
+              <div class="col-lg-12">
+                  <small>Don't have an account yet?</small> 
+                  <br>
+                  <a href="{{ url('register') }}">Click here to sign up</a>
+              </div>
+          </div>
+      @endguest
+
     </div>
 </div>
 
@@ -198,16 +217,26 @@
             <a class="nav-link " href="{{ url('/#amenities') }}">Amenities</a>
           </li>
 
-          {{-- <li class="nav-item">
-            <a class="nav-link " href="{{ url('/#contact') }}">Contact</a>
-          </li> --}}
-
         </ul>
       </div>
 
       <button type="button" class="btn btn-b-n btn-book navbar-toggle-box navbar-toggle-box-collapse" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
         Book Now
       </button>
+      
+      @auth
+          <li class="nav-item dropdown" style="list-style-type: none; margin-left: 20px;">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person"></i></a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item " href="property-single.html">Transactions</a>
+                  <a class="dropdown-item " href="property-single.html">Credential</a>
+                  <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+              </div>
+          </li>
+      @endauth
 
     </div>
   </nav>

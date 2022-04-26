@@ -17,14 +17,10 @@ class WebsiteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('web');
     }
 
     public function index() {
-/*         if (date('H', strtotime(now())) >= 18) {
-            
-        } */
-
         $room = Room::where('status', '!=', -1)
                     ->orderBy('price_wd', 'desc')
                     ->get();
@@ -33,6 +29,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('index', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('index', ['data' => $data]);
     }
 
@@ -74,6 +76,12 @@ class WebsiteController extends Controller
             'ds' => $ds
         ]; 
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('resto-bar', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('resto-bar', ['data' => $data]);
     }
 
@@ -86,6 +94,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('packages', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('packages', ['data' => $data]);
     }
 
@@ -98,6 +112,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+            return view('tours', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('tours', ['data' => $data]);
     }
 
@@ -113,6 +133,12 @@ class WebsiteController extends Controller
             'getRoom' => $getRoom
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('room', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('room', ['data' => $data]);
     }
 
@@ -128,6 +154,12 @@ class WebsiteController extends Controller
             'pool' => $pool
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('pool', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('pool', ['data' => $data]);
     }
 
@@ -140,6 +172,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('ktv', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('ktv', ['data' => $data]);
     }
 
@@ -152,6 +190,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('urduja', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('urduja', ['data' => $data]);
     }
     
@@ -164,6 +208,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('conference', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('conference', ['data' => $data]);
     }
 
@@ -295,6 +345,12 @@ class WebsiteController extends Controller
             'room' => $room
         ];
 
+        if (Auth::check()) {
+            if (Auth::user()->booker_id != null)
+                return view('3d', ['data' => $data]);
+            else
+                return redirect()->back();
+        }
         return view('3d', ['data' => $data]);
     }
 
