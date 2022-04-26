@@ -20,7 +20,8 @@ class User extends Authenticatable
         'username', 
         'password', 
         'status', 
-        'created_by'
+        'created_by',
+        'booker_id',
     ];
 
     /**

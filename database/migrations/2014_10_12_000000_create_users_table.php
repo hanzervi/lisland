@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(1);
             $table->rememberToken();
-            $table->integer('created_by')->unsigned();
+            $table->integer('created_by')->unsigned()->nullable()->default(null);
+            $table->integer('booker_id')->unsigned()->nullable()->default(null);
             $table->timestamps();
         });
     }

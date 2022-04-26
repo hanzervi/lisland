@@ -10,12 +10,13 @@ use DB;
 use Auth;
 
 use App\User;
+use App\Booker;
 
 class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'add']);
     }
 
     public function index() {
@@ -49,17 +50,39 @@ class UserController extends Controller
                     'username' => ['required', 'unique:users,username']
                 ]);
 
-                if ($validator->passes()) { 
-                    $input = [
-                        'name' => $request->name,
-                        'username' => $request->username,
-                        'password' => Hash::make($request->password),
-                        'status' => 1,
-                        'created_by' => Auth::id()
-                    ];
+                if ($validator->passes()) {
+                    if (Auth::check()) {
+                        $input = [
+                            'name' => $request->name,
+                            'username' => $request->username,
+                            'password' => Hash::make($request->password),
+                            'status' => 1,
+                            'created_by' => Auth::id()
+                        ];
+    
+                        User::create($input);
+                        $result = 'success';
+                    }
+                    else {
+                        $booker = Booker::create([
+                            'first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'address' => $request->address,
+                            'contact' => $request->contact,
+                            'email' => $request->email
+                        ]);
 
-                    User::create($input);
-                    $result = 'success';
+                        $input = [
+                            'name' => $booker->first_name . " " . $booker->last_name,
+                            'username' => $request->username,
+                            'password' => Hash::make($request->password),
+                            'status' => 1,
+                            'booker_id' => $booker->id
+                        ];
+    
+                        User::create($input);
+                        $result = 'success';
+                    }
                 }
                 else
                     $result = 'username_error';
