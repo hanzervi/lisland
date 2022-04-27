@@ -133,16 +133,16 @@ class BookOnlineController extends Controller
 
                 $mail               = new PHPMailer\PHPMailer();
                 
-                //$mail->SMTPDebug    = 1;
+                //$mail->SMTPDebug    = 2;
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
+                $mail->Host = 'smtp.hostinger.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'pccartel.computers@gmail.com';
-                $mail->Password = 'admincartel';
+                $mail->Username = 'info@lislandrainforestresort.online';
+                $mail->Password = 'Hanzlisland123!';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
+                $mail->SetFrom("info@lislandrainforestresort.online", "Lisland Management Team");
 
                 $mail->addAddress($customer->email);
 
@@ -153,8 +153,8 @@ class BookOnlineController extends Controller
 
                 /* sms ----------------- */
 
-                $apicode = "TR-MARCO937024_2B18Y";
-                $passwd = 'b$ti@$u(a3';
+                $apicode = "TR-MARCO107536_TACKB";
+                $passwd = 'ye]]4#ur@z';
                 $number = $customer->contact_no;
                 $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status is now RESERVED. - By Lisland Management Team.";
 
@@ -192,23 +192,16 @@ class BookOnlineController extends Controller
 
                 $mail               = new PHPMailer\PHPMailer();
                 
-                //$mail->SMTPDebug    = 1;
+                //$mail->SMTPDebug    = 2;
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
+                $mail->Host = 'smtp.hostinger.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'pccartel.computers@gmail.com';
-                $mail->Password = 'admincartel';
+                $mail->Username = 'info@lislandrainforestresort.online';
+                $mail->Password = 'Hanzlisland123!';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->SetFrom("pccartel.computers@gmail.com", "Lisland Management Team");
-
-                /* $mail->Username = 'lislandresortph@gmail.com';
-                $mail->Password = 'mjbalangue611';
-                $mail->SMTPSecure = 'tls';
-                $mail->Port = 587;
-
-                $mail->SetFrom("lislandresortph@gmail.com", "Lisland Management Team"); */
+                $mail->SetFrom("info@lislandrainforestresort.online", "Lisland Management Team");
 
                 $mail->addAddress($customer->email);
 
@@ -219,8 +212,8 @@ class BookOnlineController extends Controller
 
                 /* sms ----------------- */
 
-                $apicode = "TR-MARCO937024_2B18Y";
-                $passwd = 'b$ti@$u(a3';
+                $apicode = "TR-MARCO107536_TACKB";
+                $passwd = 'ye]]4#ur@z';
                 $number = $customer->contact_no;
                 $message = "Dear Sir/Madam" . $customer->lastname . ", Your reservation book status has been CANCELLED. - By Lisland Management Team.";
 

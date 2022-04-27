@@ -11,6 +11,13 @@
 |
 */
 
+/* Route::get('storage-link', function(){
+    $targetFolder = '/home/u701121901/domains/lislandrainforestresort.online/lisland/storage/app/public';
+    $linkFolder = '/home/u701121901/domains/lislandrainforestresort.online/public_html/storage';
+    symlink($targetFolder, $linkFolder);
+    return 'success';
+}); */
+
 /* IN AND OUT ----------------------------------------------------------------- */
 
 /* Route::get('/in-out', 'WebsiteController@inOut'); */
