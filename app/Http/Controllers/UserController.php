@@ -44,7 +44,24 @@ class UserController extends Controller
 
     public function get(Request $request, $id) {
         if ($request->ajax()) {
-            return User::whereId($id)->get();
+            if (Auth::user()->booker_id == null)
+                return User::whereId($id)->get();
+            else {
+                $booker = Booker::whereId(Auth::user()->booker_id)->first();
+                
+                $user = User::whereId($id)->get();
+
+                foreach($user as $item) {
+                    $item->first_name = $booker->first_name;
+                    $item->last_name = $booker->last_name;
+                    $item->address = $booker->address;
+                    $item->sex = $booker->sex;
+                    $item->contact = $booker->contact;
+                    $item->email = $booker->email;
+                }
+
+                return $user;
+            }
         }
         return response()->json(['error' => 'Unauthorized.'], 401);
     }
@@ -133,20 +150,49 @@ class UserController extends Controller
                 ]);
                 if ($validator->passes()) {
 
-                    if ($request->update_password != '') {
-                        User::where('id', '=', $request->update_id)
-                            ->update([
-                                        'name' => $request->update_name, 
-                                        'username' => $request->update_username, 
-                                        'password' => Hash::make($request->update_password)
-                                    ]);
+                    if (Auth::user()->booker_id == null) {
+                        if ($request->update_password != '') {
+                            User::where('id', '=', $request->update_id)
+                                ->update([
+                                            'name' => $request->update_name, 
+                                            'username' => $request->update_username, 
+                                            'password' => Hash::make($request->update_password)
+                                        ]);
+                        }
+                        else {
+                            User::where('id', '=', $request->update_id)
+                                ->update([
+                                            'name' => $request->update_name, 
+                                            'username' => $request->update_username
+                                        ]);
+                        }
                     }
                     else {
-                        User::where('id', '=', $request->update_id)
-                            ->update([
-                                        'name' => $request->update_name, 
-                                        'username' => $request->update_username
-                                    ]);
+                        if ($request->update_password != '') {
+                            User::where('id', '=', $request->update_id)
+                                ->update([
+                                            'name' => $request->update_firstname . " " . $request->update_lastname, 
+                                            'username' => $request->update_username, 
+                                            'password' => Hash::make($request->update_password)
+                                        ]);
+                        }
+                        else {
+                            User::where('id', '=', $request->update_id)
+                                ->update([
+                                            'name' => $request->update_firstname . " " . $request->update_lastname, 
+                                            'username' => $request->update_username
+                                        ]);
+                        }
+
+                        Booker::whereId(Auth::user()->booker_id)
+                                ->update([
+                                    'first_name' => $request->update_firstname,
+                                    'last_name' => $request->update_lastname,
+                                    'address' => $request->update_address,
+                                    'sex' => $request->update_sex,
+                                    'contact' => $request->update_contact,
+                                    'email' => $request->update_email
+                                ]);
                     }
 
                     $result = 'success';
@@ -155,18 +201,46 @@ class UserController extends Controller
                     $result = 'username_error';
         }
         else {
-            if ($request->update_password != '') {
-                User::where('id', '=', $request->update_id)
-                    ->update([
-                                'name' => $request->update_name, 
-                                'password' => Hash::make($request->update_password)
-                            ]);
+            
+            if (Auth::user()->booker_id == null) {
+                if ($request->update_password != '') {
+                    User::where('id', '=', $request->update_id)
+                        ->update([
+                                    'name' => $request->update_name, 
+                                    'password' => Hash::make($request->update_password)
+                                ]);
+                }
+                else {
+                    User::where('id', '=', $request->update_id)
+                        ->update([
+                                    'name' => $request->update_name, 
+                                ]);
+                }
             }
             else {
-                User::where('id', '=', $request->update_id)
-                    ->update([
-                                'name' => $request->update_name, 
-                            ]);
+                if ($request->update_password != '') {
+                    User::where('id', '=', $request->update_id)
+                        ->update([
+                                    'name' => $request->update_firstname . " " . $request->update_lastname, 
+                                    'password' => Hash::make($request->update_password)
+                                ]);
+                }
+                else {
+                    User::where('id', '=', $request->update_id)
+                        ->update([
+                                    'name' => $request->update_firstname . " " . $request->update_lastname, 
+                                ]);
+                }
+
+                Booker::whereId(Auth::user()->booker_id)
+                        ->update([
+                            'first_name' => $request->update_firstname,
+                            'last_name' => $request->update_lastname,
+                            'address' => $request->update_address,
+                            'sex' => $request->update_sex,
+                            'contact' => $request->update_contact,
+                            'email' => $request->update_email
+                        ]);
             }
 
             $result = 'success';

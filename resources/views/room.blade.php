@@ -146,6 +146,12 @@
 @section('js')
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="{{ asset('public/plugins/panorama-viewer/jquery.panorama_viewer.js') }}"></script>
+<script src="{{ asset('public/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('public/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('public/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('public/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('public/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('public/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
 
 <script>
 

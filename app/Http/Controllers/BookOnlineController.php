@@ -34,7 +34,10 @@ class BookOnlineController extends Controller
 
     public function table(Request $request) {
         if ($request->ajax()) {
-            $data = DB::table('books')
+            $data;
+            
+            if (Auth::user()->booker_id == null) {
+                $data = DB::table('books')
                         ->selectRaw('
                             DATE_FORMAT(books.created_at, "%y%m%d%H%i") as ref, books.id, rooms.name as room,
                             CONCAT(customers.firstname, " ", customers.lastname) as customer,
@@ -47,6 +50,23 @@ class BookOnlineController extends Controller
                         ->where('books.status', '!=', '-1')
                         ->where('books.type', '=', 'online')
                         ->get();
+            }
+            else {
+                $data = DB::table('books')
+                        ->selectRaw('
+                            DATE_FORMAT(books.created_at, "%y%m%d%H%i") as ref, books.id, rooms.name as room,
+                            CONCAT(customers.firstname, " ", customers.lastname) as customer,
+                            books.adults, books.children, books.infants, books.add_person,
+                            books.check_in, books.check_out, books.priceTotal, books.status, books.remarks,
+                            books.payment, books.payment_ref
+                        ')
+                        ->join('rooms', 'rooms.id', '=', 'books.room_id')
+                        ->join('customers', 'customers.id', '=', 'books.customer_id')
+                        ->where('books.status', '!=', '-1')
+                        ->where('books.type', '=', 'online')
+                        ->where('books.created_By', '=', Auth::user()->id)
+                        ->get();
+            }
 
             foreach($data as $item) {
                 $item->pax = $item->adults + ($item->children = null ? 0 : $item->children) + ($item->infants = null ? 0 : $item->infants) + ($item->add_person = null ? 0 : $item->add_person);

@@ -32,6 +32,7 @@ class BookOnsiteController extends Controller
             }
 
             $item->available = $item->no_rooms - $booked;
+            $item->available = $item->available < 0 ? 0 : $item->available;
         }
 
         if (Auth::check()) {
@@ -97,9 +98,13 @@ class BookOnsiteController extends Controller
                                 ->count();
         }
 
-        return Room::select('no_rooms')
+        $available = Room::select('no_rooms')
                         ->whereId($request->room_id)
                         ->first()->no_rooms - $booked;
+
+        $available = $available < 0 ? 0 : $available;
+
+        return $available;
     }
 
     public function checkRoomCapacity(Request $request) {

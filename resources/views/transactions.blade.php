@@ -1,46 +1,32 @@
 <div class="modal fade" id="transactions">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add User</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title">Transactions</h4>
             </div>
-            <form action="javascript:void(0)" method="POST" id="addForm">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="name" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Username <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="username" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="password" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Confirm Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="confirmPw" required>
-                            </div>
-                        </div>
-                    </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tb" class="table table-bordered table-striped" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Ref #</th>
+                                <th>Room</th>
+                                <th>Pax</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Price Total</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                                <th>Paid Thru</th>
+                                <th>Payment Ref #</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-custom btn-default" data-dismiss="modal" onclick="$('#addForm').trigger('reset');">Close</button>
-                    <button role="submit" class="btn btn-custom btn-success">Add</button>
-                </div>
-            </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" onclick="$('#transactions').modal('hide')">Close</button>
+            </div>
         </div>
     </div>
 </div>

@@ -17,6 +17,9 @@
   <link href="{{ asset('public/assets/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
   <link href="{{ asset('public/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('public/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <link href="{{ asset('public/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
   <link href="{{ asset('public/assets/css/style.css') }}" rel="stylesheet">
@@ -177,26 +180,26 @@
             <a class="nav-link " href="{{ url('/#amenities') }}">Amenities</a>
           </li>
 
+          @auth
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person"></i></a>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item " href="javascript:void(0)" onclick="$('#transactions').modal('show'); callDt();">Transactions</a>
+                      <a class="dropdown-item " href="javascript:void(0)" onclick="$('#user').modal('show');">User</a>
+                      <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                      </form>
+                  </div>
+              </li>
+          @endauth
+
         </ul>
       </div>
 
       <button type="button" class="btn btn-b-n btn-book navbar-toggle-box navbar-toggle-box-collapse" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
         Book Now
       </button>
-      
-      @auth
-          <li class="nav-item dropdown" style="list-style-type: none; margin-left: 20px;">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person"></i></a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item " href="property-single.html">Transactions</a>
-                  <a class="dropdown-item " href="property-single.html">Credential</a>
-                  <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      @csrf
-                  </form>
-              </div>
-          </li>
-      @endauth
 
     </div>
   </nav>
@@ -279,6 +282,9 @@
     </div>
   </section>
 
+  @include('transactions')
+  @include('user')
+
   <footer>
     <div class="container">
       <div class="row">
@@ -320,7 +326,23 @@
   <script src="{{ asset('public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('public/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 
+  <script src="{{ asset('public/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('public/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('public/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+  <script src="{{ asset('public/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('public/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+  <script src="{{ asset('public/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+
   <script src="{{ asset('public/assets/js/main.js') }}"></script>
+
+  @auth
+      <script>
+          $(document).ready(function(){
+              $.fn.dataTable.ext.errMode = 'none';
+              callDt();
+          });
+      </script>
+  @endauth
 
   <script>
     $(document).ready(function () {
@@ -347,6 +369,62 @@
         $('input[type="date"]').attr('min', today);
 
     });
+
+    function callDt() {
+        $("#tb").DataTable({
+            bDestroy: true,
+            ajax: {
+                url: "{{ url('/admin/booking/online/table') }}",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: 'ref'
+                },
+                {
+                    data: 'room'
+                },
+                {
+                    data: 'pax'
+                },
+                {
+                    data: 'check_in'
+                },
+                {
+                    data: 'check_out'
+                },
+                {
+                    data: 'priceTotal',
+                    render: function (data, type, row) {
+                        return data.toLocaleString();
+                    }
+                        
+                },
+                {
+                    data: 'status',
+                    render: function (data, type, row) {
+                        if (data == 0)
+                            return '<span class="text-warning">Pending</span>';
+                        else if (data == 1) 
+                            return '<span class="text-info">Reserved</span>';
+                        else if (data == 2)
+                            return '<span class="text-success">Checked In</span>';
+                        else if (data == 3)
+                            return '<span class="text-warning">Checked Out</span>';
+                    }
+                },
+                {
+                    data: 'remarks'
+                },
+                {
+                    data: 'payment'
+                },
+                {
+                    data: 'payment_ref'
+                },
+            ]
+        });
+    }
 
     $('[name=room_id]').on('change', function () {
         $('[name=adults]').val(0);
